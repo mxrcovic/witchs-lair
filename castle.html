@@ -74,6 +74,22 @@
 }
 @media(prefers-reduced-motion:reduce){.floor-halo,.relic{transition:none}}
 
+/* VERSION C — high-contrast neutral masonry, warmer micro-lights */
+:root{--void:#111316;--stone:#343a40;--ink:#e0d1bd;--faint:#a7aaa5;--violet:#7c677e;--border:#575a5b;--glow:#c3a987;--ember:#e38a53}
+.atlas{background:#181b20;border-color:#525253}
+.mast{background:linear-gradient(90deg,#181c20,#28252b);border-color:#615958}
+.map{background:#22272d}
+.floor-halo{background:linear-gradient(90deg,#c5a47918,transparent 83%);border-color:#a9997438}
+.floor-labels span{color:#c3bdb2;text-shadow:1px 2px #101315;opacity:.86}
+.relic{border-color:#8a7c6770;background:#15191c70;box-shadow:inset 0 0 0 1px #202428,2px 3px #111318a0}
+.relic:hover,.relic:focus-visible{background:#39343b;border-color:#e8c193}
+.status{background:#1c1f23;border-color:#585a59}
+.status-title{color:#ecdbc3}.status-desc{color:#c5b9ab}
+.floor-tabs button{background:#292c2e;color:#d1c4b0;border-color:#54575a}
+.floor-tabs button[aria-pressed=true]{background:#51463e;color:#ffddb4;border-color:#d49c62}
+.links a{background:#28292b;border-color:#555759;color:#e9d9c0}
+.links a:hover{background:#40383c;border-color:#c4986a}
+.foot{background:#15171b;color:#a89c8c}
 </style></head><body>
 <main class="atlas">
 <header class="mast"><div><div class="crest">☾ THE WITCH'S LAIR <span style="color:#8f697d">✣</span></div><div class="sub">THE CURSED CASTLE // TOUCH THE RELICS</div></div><div class="mini">MMXXVI<br>28 RELICS ▣</div></header>
@@ -257,31 +273,199 @@ function r(x,y,w,h,c,more={}){return el('rect',{x,y,width:w,height:h,fill:c,...m
 function p(d,c,more={}){return el('path',{d,fill:c,...more})}
 function l(x1,y1,x2,y2,c,w=2){return el('line',{x1,y1,x2,y2,stroke:c,'stroke-width':w})}
 function circle(x,y,rad,c){return el('circle',{cx:x,cy:y,r:rad,fill:c})}
-function stone(y,bg){r(0,y,900,112,bg);for(let j=0;j<62;j++){const x=Math.floor(rnd()*900),yy=Math.floor(y+7+rnd()*94);r(x,yy,17+Math.floor(rnd()*28),2, j%3===0?'#6a756d':'#464e4d',{opacity:.38})}r(0,y+103,900,9,'#130f18');for(let x=0;x<900;x+=50){r(x,y+105,45,3,'#68736b');r(x+3,y+108,19,2,'#3c4643')}}
-function arch(x,y,h=90,w=95,col='#293330'){p('M'+x+' '+(y+h)+'V'+(y+30)+'L'+(x+w/2)+' '+y+'L'+(x+w)+' '+(y+30)+'V'+(y+h)+'Z',col,{stroke:'#53545a','stroke-width':3});p('M'+(x+8)+' '+(y+h)+'V'+(y+36)+'L'+(x+w/2)+' '+(y+11)+'L'+(x+w-8)+' '+(y+36)+'V'+(y+h)+'Z','#18141d',{opacity:'.45'})}
-function candle(x,y){r(x,y,5,12,'#c9b1a0');r(x,y-4,5,4,'#d68556');r(x+1,y-8,3,5,'#ffc586');r(x+2,y-11,1,3,'#fff4ba')}
-function column(x,y,h){r(x,y,12,h,'#59635e');r(x+2,y,3,h,'#7e8780');r(x-4,y-3,20,4,'#7c8478');r(x-5,y+h,22,6,'#342939')}
-function vine(x,y,dy){for(let i=0;i<dy;i+=9){l(x+(i%18===0?0:6),y+i,x+4,y+i+10,'#384136',2);r(x+((i*3)%17),y+i,6,3,i%3?'#3f4738':'#713c47')}}
-stone(0,'url(#sky)');circle(658,43,31,'#893e55');circle(661,43,24,'#b35367');circle(654,36,5,'#7f3a50');circle(670,49,6,'#8b4153');
-p('M0 88L140 45L245 95L348 57L492 97L566 47L713 92L824 55L900 88V111H0Z','#202030');p('M0 102L123 69L240 103L347 77L458 109L575 79L724 107L900 88V111H0Z','#2d2b38');
-for(const x of [60,140,202,308,440,525]){r(x,58+(x%3)*8,6,43,'#15171a');r(x-9,78+(x%3)*6,25,6,'#15171a');r(x-12,90+(x%2)*7,31,6,'#15171a');}
-for(const x of [96,261,366,479,755]){r(x,53,7,51,'#292631');r(x-15,68,36,6,'#292631');r(x-5,45,16,7,'#443b47')}
-for(let j=0;j<50;j++){const x=Math.floor(rnd()*700),y=96+Math.floor(rnd()*12);r(x,y,1+Math.floor(rnd()*5),2,['#5d4146','#4f4a3f','#3b493c'][j%3])}
-p('M0 13L16 20L20 3L26 25L48 0L54 23L72 12L70 0H0Z','#131018');
-stone(112,'url(#ritual)');for(let x=58;x<900;x+=146){arch(x,126,85,108);column(x+3,134,75);column(x+99,134,75)}
-r(247,170,235,38,'#382e2a');r(290,178,145,24,'#352a2b');el('ellipse',{cx:365,cy:188,rx:56,ry:17,fill:'#0e0e15',stroke:'#755a60','stroke-width':4});
-for(let i=0;i<33;i++){const x=318+i*2.5;let yy=176-Math.floor(rnd()*28);r(x,yy,4,192-yy,['#9f3c39','#d66f46','#e99561'][i%3])}
-for(const x of [90,130,204,510,541,604])candle(x,188+(x%2?0:6));for(const x of [20,195,710,800])vine(x,117,85);
-stone(224,'url(#library)');for(let x=37;x<900;x+=180){arch(x,240,87,137,'#1a1520');column(x+5,234,88);column(x+129,234,88);r(x+26,258,90,62,'#251a27');for(let z=0;z<3;z++){r(x+26,274+z*17,90,3,'#60444a');for(let n=0;n<13;n++){r(x+27+n*7,259+z*17,3+(n%3),13,['#554454','#775659','#645d52','#403c56'][n%4])}}}
-p('M345 322V261L398 233L451 261V322Z','#343037',{stroke:'#85618e','stroke-width':5});p('M360 317V270L398 248L436 270V317Z','#5d5869');l(398,248,398,318,'#c9a9bc',3);for(const x of [330,350,454,478])candle(x,312);
-stone(336,'url(#observatory)');for(let x=62;x<900;x+=175){arch(x,349,87,139,'#151a25');column(x+2,351,89);column(x+128,351,89)}
-p('M276 432V378L367 353L459 378V432Z','#1c283b',{stroke:'#5a6274','stroke-width':4});for(let i=0;i<44;i++){r(286+Math.floor(rnd()*170),355+Math.floor(rnd()*67),1+(i%3===0?2:0),1+(i%3===0?2:0),i%5===0?'#91aca7':'#d0c6bc')}
-l(320,424,386,383,'#725d64',9);l(340,430,359,405,'#544d58',5);l(365,402,380,429,'#544d58',5);circle(391,385,10,'#b2a38e');circle(389,383,5,'#223b46');for(const x of [80,112,493,541])candle(x,427);
-stone(448,'url(#sanctum)');for(let x=55;x<900;x+=157){arch(x,460,95,115,'#17111d');column(x+2,470,82);column(x+105,470,82)}
-for(const x of [120,168,215,473,536,600]){p('M'+x+' 544L'+(x+13)+' '+(506-(x%28))+'L'+(x+25)+' 544Z',x%3===0?'#768c82':'#485b55');l(x+9,540,x+15,518,'#a17a9f',2)}
-r(325,510,167,9,'#6a4f5c');r(350,520,118,20,'#342631');r(359,493,97,15,'#3c2b3a');circle(405,488,19,'#5b505a');circle(405,488,12,'#897183');
-for(const x of [310,321,492,503])candle(x,500);
-for(let i=0;i<19;i++){const x=i*48+6;r(x,555+(i%2),28,4,'#453447')}
+/* THE CURSED CASTLE — POLISHED PIXEL WORLD, V.C
+   Deliberately restrained palette: stone / iron, worn oak, dying leaves, isolated lights. */
+const PX={
+shadow:'#101114',black:'#15191b',charcoal:'#21272b',rock:'#343b3e',
+slate:'#414b50',stone:'#59646a',ash:'#788287',bone:'#c3b7a5',
+gold:'#bc9367',ember:'#d98753',fire:'#f4bc78',rust:'#754b45',
+oxblood:'#63363e',violet:'#745774',arcane:'#a389ae',teal:'#6f9195',
+moss:'#455143',sage:'#6e7965',deadleaf:'#86614c',oak:'#514239'
+};
+function box(x,y,w,h,c){r(Math.round(x),Math.round(y),Math.round(w),Math.round(h),c)}
+function rockLine(x,y,w,shade){box(x,y,w,2,shade)}
+function masonry(y,h,shade){
+ box(0,y,900,h,shade);
+ for(let yy=y+5,row=0;yy<y+h-9;yy+=14,row++){
+  const offset=row%2?18:0;
+  for(let xx=-30+offset;xx<900;xx+=43){
+   const palette=[PX.charcoal,'#2a3033','#394044','#414748'];
+   const c=palette[Math.floor(rnd()*palette.length)];
+   box(xx+1,yy,40,11,c);
+   box(xx+1,yy,40,2,'#51595a');
+   box(xx+2,yy+3,2,6,'#474e4f');
+   if(rnd()<.29)box(xx+8+Math.floor(rnd()*24),yy+7,8,1,'#62696a');
+   if(rnd()<.07)box(xx+5,yy+3,5,2,'#5c5549');
+  }
+ }
+ box(0,y+h-10,900,10,'#14191b');
+ for(let x=0;x<900;x+=34){
+  box(x,y+h-10,30,3,'#667071');
+  box(x+3,y+h-7,20,2,'#333b3d')
+ }
+}
+function archway(x,y,w,h,inside='#181e21'){
+ const tip=x+w*.5;
+ p('M'+x+' '+(y+h)+'V'+(y+25)+'L'+tip+' '+y+'L'+(x+w)+' '+(y+25)+'V'+(y+h)+'Z',
+  inside,{stroke:'#717877','stroke-width':4});
+ p('M'+(x+7)+' '+(y+h)+'V'+(y+30)+'L'+tip+' '+(y+11)+'L'+(x+w-7)+' '+(y+30)+'V'+(y+h)+'Z',
+ '#1b2326',{opacity:'.75'});
+ l(x+2,y+29,x+2,y+h,PX.rock,3);
+ l(x+w-2,y+29,x+w-2,y+h,PX.rock,3);
+ box(x-7,y+h-4,16,5,'#777e7a');box(x+w-9,y+h-4,16,5,'#777e7a');
+}
+function pillar(x,y,height){
+ box(x-5,y,16,height,PX.rock);box(x-5,y,4,height,'#718080');
+ box(x-9,y-4,25,6,PX.stone);box(x-10,y+height-5,27,6,PX.stone);
+ box(x+8,y+6,3,height-12,PX.charcoal);
+ for(let n=18;n<height-10;n+=21)box(x-5,y+n,16,2,'#485052')
+}
+function candle(x,y,n=1){
+ for(let j=0;j<n;j++){
+ const k=x+j*11,hh=8+(j%3)*4;
+ box(k,y-hh,5,hh,'#d1c2a1');box(k+1,y-hh-2,2,3,PX.ember);
+ box(k+2,y-hh-7,2,5,PX.fire);box(k+2,y-hh-9,1,3,'#fff1ae');
+ box(k,y-1,6,2,'#74624c');
+ }
+}
+function shelf(x,y,w,h){
+ box(x,y,w,h,PX.oak);box(x+4,y+3,w-8,h-7,'#201c1c');
+ for(let j=0;j<3;j++){
+  const yy=y+5+j*19;
+  for(let k=0;k<Math.floor((w-8)/7);k++){
+   const ht=11+(k%4),bx=x+5+k*7;
+   box(bx,yy+14-ht,5,ht,['#70635c','#89674f','#46575b','#756471','#a18e77','#403e43'][k%6]);
+   if(k%3===0)box(bx+1,yy+15-ht,1,ht,'#c4a68b')
+  }
+  box(x+3,yy+15,w-6,4,'#70594a');box(x+3,yy+18,w-6,2,'#322827');
+ }
+}
+function hangingHerbs(x,y){
+ l(x,y,x+52,y,'#987957',2);
+ for(let k=0;k<5;k++){const xx=x+4+k*10; l(xx,y,xx,y+23,PX.sage,1);
+  for(let q=5;q<=17;q+=4){
+   box(xx-4,y+q,5,3,k%2?PX.deadleaf:PX.moss);
+   box(xx+1,y+q+1,5,3,k%2?'#906648':'#6b8067')
+  }
+ }
+}
+function autumnBranch(x,y){
+ l(x,y,x+110,y-55,PX.oak,6);
+ l(x+44,y-21,x+31,y-55,PX.oak,3);
+ l(x+75,y-39,x+105,y-79,PX.oak,3);
+ for(let i=0;i<72;i++){
+  const xx=x+13+rnd()*119,yy=y-22-rnd()*65;
+  const cs=[PX.oxblood,PX.rust,PX.deadleaf,'#995d51','#55513e'];
+  box(xx,yy,4+rnd()*6,2+rnd()*4,cs[Math.floor(rnd()*cs.length)]);
+ }
+}
+function creepingVine(x,y,len){
+ for(let i=0;i<len;i+=7){
+  box(x+Math.floor(Math.sin(i*.22)*6),y+i,2,9,'#45453a');
+  if(i%14===0)box(x-6+Math.floor(Math.sin(i*.22)*7),y+i,9,4,i%28===0?PX.moss:PX.deadleaf)
+ }
+}
+function glass(x,y,w,h,tint){
+ p('M'+x+' '+(y+h)+'V'+(y+17)+'L'+(x+w/2)+' '+y+'L'+(x+w)+' '+(y+17)+'V'+(y+h)+'Z',
+ tint,{stroke:'#82898b','stroke-width':4});
+ l(x+w/2,y+10,x+w/2,y+h,'#a0a2a0',2);
+ for(let i=21;i<h;i+=22)l(x+3,y+i,x+w-3,y+i,'#7a8588',1);
+}
+function candelabra(x,y){
+ box(x,y-18,3,18,'#8a7159');box(x-14,y-19,31,3,'#9f8d71');
+ candle(x-12,y-19);candle(x+1,y-19);candle(x+13,y-19)
+}
+function book(x,y){
+ box(x,y,49,3,'#7d534b');box(x+3,y-15,43,15,'#d1bd97');
+ box(x+5,y-13,19,12,'#a18c71');box(x+27,y-13,17,12,'#ae9479');
+ l(x+25,y-14,x+25,y,'#50383b',2);
+ for(let i=0;i<3;i++){l(x+7,y-10+i*3,x+20,y-10+i*3,'#6a5d56',1);l(x+29,y-10+i*3,x+41,y-10+i*3,'#63595c',1)}
+}
+function bramble(x,y,w){
+ for(let i=0;i<w;i+=7){
+  const hh=5+Math.floor(rnd()*12);
+  box(x+i,y-hh,2,hh,'#3e483b');
+  if(i%3!==0)box(x+i-3,y-hh+4,7,3,rnd()<.18?'#865a49':'#525647')
+ }
+}
+/* I · HAUNTED GROUNDS — the single colorful accent is the blood moon. */
+box(0,0,900,112,'#303a42');
+for(let j=0;j<22;j++){const x=Math.floor(rnd()*900),y=Math.floor(rnd()*75);box(x,y,2,2,'#71767b')}
+circle(648,31,25,'#8c4851');circle(652,30,19,'#ab5760');circle(642,24,5,'#85434b');circle(660,39,5,'#85434b');
+p('M0 86L67 49L139 88L219 48L311 83L406 37L514 92L625 45L761 85L852 52L900 74V112H0Z','#222b32');
+p('M0 101L91 67L204 107L347 71L426 103L536 73L671 103L762 73L900 91V112H0Z','#293238');
+/* castle silhouettes */
+for(const [x,w,h] of [[80,44,55],[166,29,46],[296,70,70],[498,37,53],[718,56,71]]){
+ box(x,111-h,w,h,'#22262b');box(x+w*.4,101-h,7,16,'#22262b');
+ for(let z=0;z<w;z+=11)box(x+z,111-h-4,7,5,'#384044');
+ box(x+w*.55,111-h+19,4,12,'#996b56')
+}
+autumnBranch(0,64);
+for(const x of [76,136,270,417,584,712]){box(x,84,16,23,'#53595b');box(x+2,83,12,3,'#83817b');box(x+5,89,3,7,'#22262b')}
+box(0,102,900,10,PX.rock);bramble(4,110,895);
+/* herb-house, fence and old chest */
+box(175,49,81,48,'#2b3334');p('M167 51L214 26L265 51Z','#5d6865',{stroke:'#80918a','stroke-width':3});
+for(const x of [186,205,226,246]){box(x,52,4,37,'#8c9189');box(x+4,54,14,30,'#315055')}
+box(183,90,74,4,'#91785d');hangingHerbs(328,45);
+box(365,79,49,19,'#58463b');box(368,82,43,3,'#937355');box(390,85,3,11,'#bb9565');
+box(517,87,42,7,'#777067');candle(529,88,2);
+/* storm vane */
+l(684,84,684,34,'#979895',4);l(669,45,699,45,PX.ash,2);p('M689 40L702 44L689 49Z',PX.ember);l(683,41,672,33,'#858681',2);
+/* II · RITUAL CHAMBER — iron, oak and dying fire */
+masonry(112,113,'#2c3235');
+for(let x=35;x<900;x+=143){archway(x,124,112,89);pillar(x+5,147,61);pillar(x+102,147,61)}
+for(const x of [28,317,609,865])creepingVine(x,116,90);
+box(0,218,900,6,'#586063');box(170,192,103,19,'#514137');box(180,185,82,8,'#8d7963');
+hangingHerbs(106,146);
+box(304,186,48,15,'#59443b');book(296,186);
+candle(129,201,2);candle(270,203);
+box(413,183,60,12,'#544c47');el('ellipse',{cx:444,cy:183,rx:36,ry:10,fill:'#151516',stroke:'#8e7d70','stroke-width':4});
+for(let i=0;i<20;i++){const x=426+i*2.2,y=178-(i%5)*5;box(x,y,4,187-y,['#a55140','#ec8b47','#f1b16a'][i%3])}
+box(549,188,78,10,'#605147');box(558,176,60,4,'#b99f7b');candle(564,175,3);
+for(const x of [666,707,746,788]){
+ box(x,167,15,25,'#453b3b');box(x+2,164,11,6,'#8a7271');box(x+4,155,7,9,'#6c8b82')
+}
+candle(808,198,2);
+/* III · FORBIDDEN LIBRARY — elaborate shelves and one violet window */
+masonry(225,112,'#2c3034');
+for(let x=33;x<900;x+=164){archway(x,237,124,88);pillar(x+4,250,74);pillar(x+112,250,74)}
+shelf(44,245,95,74);shelf(170,245,95,74);shelf(590,245,98,74);shelf(716,245,95,74);
+glass(391,233,116,92,'#4c4a59');
+for(let i=0;i<16;i++){box(405+Math.floor(rnd()*90),247+Math.floor(rnd()*68),2,2,'#aa8c9f')}
+box(323,309,64,6,'#706052');book(334,307);
+box(473,308,66,7,'#6e5c50');box(490,290,34,19,'#34343a');circle(505,299,9,'#857565');
+for(const x of [302,563,670,828])candle(x,317,x===563?2:1);
+creepingVine(850,229,94);
+/* IV · ARCANE OBSERVATORY — blue hour and star-glass */
+masonry(338,112,'#28313b');
+for(let x=48;x<900;x+=165){archway(x,348,124,91);pillar(x+3,365,76);pillar(x+116,365,76)}
+glass(346,346,130,86,'#253c4b');
+for(let j=0;j<58;j++){
+ const x=355+Math.floor(rnd()*109),y=357+Math.floor(rnd()*68);
+ box(x,y,j%7===0?3:1,j%7===0?3:1,j%5===0?'#d2ded4':'#89a4a9')
+}
+/* golden armillary on left */
+circle(239,389,30,'#827262');circle(239,389,24,'#1c262d');
+el('ellipse',{cx:239,cy:389,rx:28,ry:11,fill:'none',stroke:'#bf9d6d','stroke-width':3});
+l(210,388,269,388,'#a78766',3);l(239,358,239,419,'#a78766',3);
+box(236,419,6,14,'#826d53');box(225,431,31,4,'#776352');
+/* observatory telescope */
+l(354,417,410,382,'#c19d6e',10);l(358,416,411,382,'#665a4f',4);
+l(374,408,364,430,'#7d6d5f',4);l(374,408,391,430,'#7d6d5f',4);
+box(498,420,27,7,'#766456');circle(511,412,16,'#5e7881');circle(511,412,11,'#88a3a7');
+candle(635,426,2);bramble(6,438,885);
+/* V · INNER SANCTUM — obsidian with bone, a single arcane mirror */
+masonry(450,115,'#24282e');
+for(let x=42;x<900;x+=166){archway(x,462,125,96);pillar(x+3,475,74);pillar(x+117,475,74)}
+for(const x of [31,841])creepingVine(x,454,88);
+box(327,516,210,7,'#655c57');box(348,524,172,13,'#403d3c');
+candle(315,519,3);candle(542,519,2);
+glass(384,462,80,53,'#443d49');
+box(397,483,55,4,'#978375');book(399,482);
+box(581,487,44,59,'#594d49');box(587,494,32,43,'#221e25');
+el('ellipse',{cx:603,cy:517,rx:14,ry:21,fill:'#48555a',stroke:'#a18c79','stroke-width':4});
+box(595,532,16,2,'#f6b06b');
+for(let i=0;i<17;i++){const xx=i*53+6;box(xx,553,44,4,'#666669')}
 
 /* Hand-authored low-resolution relic sprites. A click opens that exact Notion page. */
 const itemKinds=[["herbs","relic","mortar","weather"],["scroll","grimoire","cauldron","flask","candles","elements"],["shelf","openbook","hourglass","statue","quill","key","scales","desk","chest"],["telescope","orb","wheel","hourglass","raven","runes","crystal"],["codex","mirror"]];
