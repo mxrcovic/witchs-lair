@@ -92,13 +92,18 @@ function rect(x,y,w,h,c){p.fillStyle=c;p.fillRect(Math.round(x),Math.round(y),Ma
 function circle(x,y,rad,c){p.fillStyle=c;p.beginPath();p.arc(Math.round(x),Math.round(y),rad,0,Math.PI*2);p.fill()}
 function poly(points,c){p.fillStyle=c;p.beginPath();p.moveTo(points[0],points[1]);for(let i=2;i<points.length;i+=2)p.lineTo(points[i],points[i+1]);p.closePath();p.fill()}
 function line(x,y,x2,y2,c,w=2){p.strokeStyle=c;p.lineWidth=w;p.beginPath();p.moveTo(Math.round(x),Math.round(y));p.lineTo(Math.round(x2),Math.round(y2));p.stroke()}
+/* Chipped, individually shaded masonry: no stretched vector texture. */
 function bricks(x,y,w,h,colors){
  rect(x,y,w,h,colors[0]);
  for(let yy=y+2,row=0;yy<y+h;yy+=10,row++){
   for(let xx=x+(row%2?-15:0);xx<x+w;xx+=33){
-   rect(xx+1,yy+1,30,8,colors[(Math.floor(random()*(colors.length-1))+1)]);
-   rect(xx+3,yy+1,25,1,'#6b6265');
-   if(random()<.17)rect(xx+7,yy+6,12,1,'#7b6e68');
+   const main=colors[1+Math.floor(random()*(colors.length-1))];
+   rect(xx+1,yy+1,30,8,main);
+   rect(xx+2,yy+1,27,1,'#756a6c');
+   rect(xx+1,yy+7,28,1,'#29232b');
+   if(random()<.48)rect(xx+4,yy+5,2+Math.floor(random()*9),1,'#8c7470');
+   if(random()<.23)rect(xx+18,yy+2,1,4,'#29232b');
+   if(random()<.13){rect(xx+26,yy+2,2,2,'#312b30');rect(xx+24,yy+4,5,1,'#938077')}
   }
  }
 }
@@ -214,14 +219,55 @@ function objectScroll(){
  for(let i=0;i<6;i++)rect(x+17+i*5,y+10,2,5,'#6e554c');
  rect(x-6,y-9,75,5,'#6d5147');rect(x-6,y+98,75,5,'#6d5147')
 }
+/* THE OPEN GRIMOIRE · bespoke layered sprite, native to the scene, not a floating icon.
+   640×360 logical pixel resolution. Independent object can be hidden or replaced via MODULES. */
 function objectGrimoire(){
- rect(161,264,7,27,'#71564d');rect(215,265,7,27,'#71564d');
- rect(152,248,78,8,'#755148');rect(145,242,90,7,'#ad7f59');
- poly([141,230,184,220,188,245,143,249],'#d8c5a1');
- poly([188,220,234,230,233,249,188,245],'#e4cb9f');
- line(188,221,188,247,'#745047',2);
- for(let i=0;i<5;i++){line(153,229+i*3,180,227+i*3,'#9b765b',1);line(194,227+i*3,224,229+i*3,'#92745d',1)}
- circle(215,239,4,'#ba8256')
+ /* its oak lectern, a real three-dimensional support */
+ rect(156,283,81,5,'#252124');
+ poly([171,251,180,251,174,286,165,286],'#60443b');
+ poly([214,251,222,251,231,286,222,286],'#66483d');
+ rect(171,267,53,5,'#9e7558');rect(175,270,45,3,'#483632');
+ rect(149,245,90,11,'#4d3030');rect(145,244,98,4,'#c29463');
+ rect(149,252,89,3,'#241e22');
+ for(let k=0;k<7;k++){rect(155+k*12,250,7,1,k%2?'#8f634b':'#a87f54')}
+ /* heavy burgundy leather boards and layered pages */
+ poly([136,228,181,216,190,219,237,228,238,247,192,253,187,251,141,252],
+      '#412b30');
+ poly([139,226,182,213,190,219,234,227,234,244,191,250,186,249,143,247],
+      '#a37b60');
+ poly([142,226,185,215,189,218,190,245,146,246],
+      '#d5b891');
+ poly([190,218,234,228,232,246,190,246],
+      '#e4caa3');
+ /* page edges and illustrated border */
+ poly([145,228,183,220,186,223,186,242,148,242],
+      '#f0d9b0');
+ poly([193,222,230,231,230,242,193,243],
+      '#eddbb8');
+ line(188,219,189,246,'#6e4c44',3);
+ rect(185,218,5,4,'#886448');
+ for(let q=0;q<3;q++){
+   line(147,242+q,184,243+q,'#a18a76',1);
+   line(194,244+q,230,243+q,'#9b826e',1)
+ }
+ /* left-page header and minuscule ink lines */
+ rect(151,226,18,2,'#9f6451');
+ rect(152,230,13,1,'#746153');
+ for(let i=0;i<4;i++){
+  line(151,234+i*2,180-(i%2)*5,231+i*2,'#816b58',1);
+ }
+ /* hand-drawn illumination on the right page: star, sun and border */
+ rect(197,226,28,1,'#a47d59');rect(197,240,28,1,'#a47d59');
+ rect(197,227,1,13,'#a47d59');rect(225,227,1,13,'#a47d59');
+ circle(211,234,5,'#a8835c');circle(211,234,3,'#e9c38a');
+ line(211,227,211,241,'#996a50',1);
+ line(204,234,219,234,'#996a50',1);
+ /* one small leather bookmark and the last corner of an old page */
+ poly([231,242,233,230,236,243],'#725048');
+ rect(181,249,5,7,'#994f4d');
+ rect(181,255,5,1,'#c08067');
+ /* contrasting glints anchor it visually to surrounding firelight */
+ rect(142,245,96,2,'#c4925f');rect(148,247,88,2,'#513b32');
 }
 function objectCauldron(){
  warmGlow(331,227);
@@ -306,6 +352,29 @@ function tinyBunny(x,y,t,asleep){
  rect(x+6,yy+4,9,3,'#8e6956');rect(x+23,yy+4,9,3,'#8e6956');
  if(asleep){rect(x+30,yy-18,3,3,'#e0d5c4');rect(x+33,yy-23,3,3,'#e0d5c4');rect(x+36,yy-28,3,3,'#e0d5c4')}
 }
+/* A few moving pixels on the grimoire rather than an overlay rectangle. */
+function grimoireLight(t){
+ p=ctx;
+ const beat=Math.floor(t/240)%28;
+ const glow=(Math.floor(t/380)%5);
+ if(beat>=19 && beat<=23){
+  const x=205+(beat-19)*3;
+  rect(x,229,2,2,'#ffd99a');
+  rect(x-2,231,1,2,'#c69a6c');
+  rect(x+2,232,1,1,'#e8be82');
+ }
+ if(glow===1||glow===3){
+  rect(184,217,2,1,'#edc994');
+  rect(188,247,2,1,'#b98263');
+ }
+ /* An occasional drifting ember crosses the book's lectern. */
+ const cycle=(t/120)%120;
+ if(cycle>58&&cycle<84){
+  const x=166+Math.floor((cycle-58)*1.1);
+  const y=261-Math.floor((cycle-58)*.52);
+  rect(x,y,2,2,'#eeb77d');
+ }
+}
 function lighting(t){
  p=ctx;
  let brightness=(Math.floor(t/180)%4);
@@ -319,7 +388,7 @@ function render(now){
  if(!ready)return;
  if(!reduceMotion&&now-last<80){requestAnimationFrame(render);return}
  last=now;p=ctx;ctx.drawImage(off,0,0);
- lighting(now);flames(now);
+ lighting(now);flames(now);grimoireLight(now);
  const active=(now-bunStart)/1000;
  const moving=!reduceMotion&&active%32<20;
  const bunnyX=moving?Math.round(220+Math.sin(active/6)*115):332;
