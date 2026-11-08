@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#18161a">
+<title>The Witch's Lair · Ritual Chamber · Master Room</title>
+<style>
+:root{color-scheme:dark;--bg:#141418;--stone:#454247;--iron:#26272c;--bone:#e6d6b9;--ember:#e8a067;--ash:#aaa39e}
+*{box-sizing:border-box}
+body{background:#151419;color:var(--bone);margin:0;font-family:Georgia,serif}
+a{color:inherit}
+.shell{max-width:1090px;margin:auto;padding:12px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 12px;border-bottom:1px solid #584b4b;padding:8px 4px 14px}
+.kicker{font:11px/1.5 monospace;letter-spacing:2px;color:#b9a090}
+.top h1{font-size:clamp(19px,3.5vw,29px);letter-spacing:1px;margin:4px 0 0;font-weight:500;color:#efdbba}
+.top a{font:11px/1.5 monospace;text-decoration:none;color:#d8b58e;border:1px solid #746056;padding:8px 10px}
+.top a:hover,.top a:focus-visible{background:#433732}
+.intro{font:12px/1.7 monospace;color:#aea19a;margin:0 0 12px}
+.frame{position:relative;border:4px solid #67615f;outline:1px solid #a38a73;background:#1d1b20;box-shadow:0 0 0 4px #100f12,inset 0 0 0 2px #1c181c}
+.scene{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#28252b}
+canvas{display:block;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges}
+.hit{position:absolute;display:block;opacity:1;background:transparent;border:0;outline:0;cursor:pointer}
+.hit::after{content:attr(data-name);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);font:11px/1.3 monospace;color:#f9ddb0;background:#17161aee;border:1px solid #b8946f;padding:7px 9px;white-space:nowrap;opacity:0;visibility:hidden;box-shadow:2px 3px #0f0d10}
+.hit:hover::after,.hit:focus-visible::after{opacity:1;visibility:visible}
+.hit:hover,.hit:focus-visible{filter:drop-shadow(0 0 5px #e9b574)}
+.hit:focus-visible{outline:2px dashed #d9ba8b;outline-offset:0}
+.hit[data-key="scroll"]{left:8%;top:27%;width:15%;height:33%}
+.hit[data-key="grimoire"]{left:21%;top:54%;width:19%;height:21%}
+.hit[data-key="cauldron"]{left:40%;top:40%;width:22%;height:32%}
+.hit[data-key="tools"]{left:68%;top:27%;width:18%;height:24%}
+.hit[data-key="candles"]{left:66%;top:55%;width:15%;height:19%}
+.hit[data-key="elements"]{left:84%;top:49%;width:13%;height:27%}
+#bun{position:absolute;left:50%;top:76%;width:7%;height:13%;border:0;cursor:pointer;background:transparent;color:transparent}
+#bun:focus-visible{outline:2px dashed #e5bf89}
+.speech{position:absolute;right:6%;bottom:14%;background:#161317ee;color:#f1d7b5;border:1px solid #9d8266;max-width:270px;padding:9px 13px;font:12px/1.5 Georgia,serif;box-shadow:3px 3px #0d0a0d}
+.speech[hidden]{display:none}
+.details{padding:14px 13px 15px;background:linear-gradient(180deg,#1e1c20,#171619);border-top:2px solid #585050}
+.small{font:10px/1.6 monospace;letter-spacing:1.5px;color:#b2a095;margin:0 0 9px}
+.nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.nav a{min-height:44px;display:flex;align-items:center;gap:9px;padding:10px;border:1px solid #615755;text-decoration:none;background:#292428;color:#ecd5b3;font:12px/1.25 monospace}
+.nav a::before{content:"✧";font-size:15px;color:#e3ab74}
+.nav a:hover,.nav a:focus-visible{background:#453235;border-color:#c49b72}
+.note{font:11px/1.6 monospace;color:#a6a1a1;margin:12px 1px 0}
+@media(max-width:550px){.shell{padding:7px}.nav{grid-template-columns:repeat(2,minmax(0,1fr))}.nav a{font-size:11px;min-height:50px}.top{padding-bottom:9px}.hit::after{display:none}.speech{max-width:65%;font-size:11px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="top">
+<div><div class="kicker">THE WITCH'S LAIR · MASTER ROOM / 02</div><h1>✦ The Ritual Chamber</h1></div>
+<a href="./castle.html" aria-label="Return to the full castle">← RETURN TO CASTLE</a>
+</header>
+<p class="intro">A living chamber of stone, ash &amp; ember. Touch the objects in the room to open their corresponding Notion pages.</p>
+<div class="frame">
+<div class="scene" id="scene">
+<canvas id="art" width="640" height="360" role="img" aria-label="Pixel-art ritual chamber, ancient stone arches, candlelit altar, open grimoire, cauldron, tools and a small sleeping brown rabbit with grey lop ears and a halo"></canvas>
+<div id="hotspots"></div>
+<button id="bun" type="button" aria-label="Pet Ochacha, the guardian familiar"></button>
+<div class="speech" id="speech" role="status" hidden></div>
+</div>
+<div class="details">
+<p class="small">✦ THE SIX RELICS · ACCESSIBLE DOORS</p>
+<nav class="nav" id="nav" aria-label="Ritual Chamber sections"></nav>
+<p class="note">An independent master-room prototype. The six destinations are configurable: pages and objects can be replaced or disabled without affecting the castle or deleting Notion content.</p>
+</div>
+</div>
+</main>
+<script>
+(()=>{
+'use strict';
+const BASE='https://app.notion.com/p/';
+/* THE ONLY CONFIGURATION TO EDIT WHEN CHANGING THE ROOM'S SECTIONS.
+   To remove a door: enabled:false. To replace one: change title, notionId and kind.
+   Each drawing routine reads the kind from this list; hotspots are named after kind. */
+const MODULES=[
+{kind:'scroll',title:'Witchcraft 101',notionId:'148272a2250d82ca8f0a81e20eb10720',enabled:true},
+{kind:'grimoire',title:'Spell Book',notionId:'430272a2250d82a198840173869101ed',enabled:true},
+{kind:'cauldron',title:'Alchemy',notionId:'e8f272a2250d83899bfd81e876b938ab',enabled:true},
+{kind:'tools',title:'Tinctures + Tools',notionId:'117272a2250d82ee9fcb01fcd7778d23',enabled:true},
+{kind:'candles',title:'Color Correspondences',notionId:'07f272a2250d8357bda1013f3664d285',enabled:true},
+{kind:'elements',title:'Elements',notionId:'000272a2250d8307a66981085e077978',enabled:true}
+];
+const palette={abyss:'#111318',shadow:'#1e1b20',dark:'#28242a',slate:'#49454a',stone:'#655d5d',pale:'#988782',bone:'#d6c4a5',gold:'#d4a267',fire:'#f0aa60',flame:'#ffd18a',rust:'#85484a',wine:'#5b303a',wood:'#4a3330',copper:'#96715d',blue:'#506a78',green:'#61725e'};
+const C=document.getElementById('art'),ctx=C.getContext('2d',{alpha:false});ctx.imageSmoothingEnabled=false;
+const off=document.createElement('canvas');off.width=640;off.height=360;
+const bg=off.getContext('2d',{alpha:false});bg.imageSmoothingEnabled=false;
+let p=bg,seed=43617,frame=0;
+function random(){seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296}
+function rect(x,y,w,h,c){p.fillStyle=c;p.fillRect(Math.round(x),Math.round(y),Math.max(1,Math.round(w)),Math.max(1,Math.round(h)))}
+function circle(x,y,rad,c){p.fillStyle=c;p.beginPath();p.arc(Math.round(x),Math.round(y),rad,0,Math.PI*2);p.fill()}
+function poly(points,c){p.fillStyle=c;p.beginPath();p.moveTo(points[0],points[1]);for(let i=2;i<points.length;i+=2)p.lineTo(points[i],points[i+1]);p.closePath();p.fill()}
+function line(x,y,x2,y2,c,w=2){p.strokeStyle=c;p.lineWidth=w;p.beginPath();p.moveTo(Math.round(x),Math.round(y));p.lineTo(Math.round(x2),Math.round(y2));p.stroke()}
+/* Chipped, individually shaded masonry: no stretched vector texture. */
+function bricks(x,y,w,h,colors){
+ rect(x,y,w,h,colors[0]);
+ for(let yy=y+2,row=0;yy<y+h;yy+=10,row++){
+  for(let xx=x+(row%2?-15:0);xx<x+w;xx+=33){
+   const main=colors[1+Math.floor(random()*(colors.length-1))];
+   rect(xx+1,yy+1,30,8,main);
+   rect(xx+2,yy+1,27,1,'#756a6c');
+   rect(xx+1,yy+7,28,1,'#29232b');
+   if(random()<.48)rect(xx+4,yy+5,2+Math.floor(random()*9),1,'#8c7470');
+   if(random()<.23)rect(xx+18,yy+2,1,4,'#29232b');
+   if(random()<.13){rect(xx+26,yy+2,2,2,'#312b30');rect(xx+24,yy+4,5,1,'#938077')}
+  }
+ }
+}
+function pillar(x,y,h){
+ rect(x-5,y,17,h,'#494044');rect(x-3,y,4,h,'#98817a');
+ rect(x+11,y+2,3,h-6,'#201b20');rect(x-9,y,25,7,'#8c7670');
+ rect(x-10,y+h-8,28,8,'#786969');
+ for(let yy=y+18;yy<y+h-8;yy+=22)rect(x-5,yy,17,2,'#29232a')
+}
+function arch(x,w){
+ const y=35,bottom=284,peak=x+w*.5;
+ poly([x,bottom,x,y+37,peak,y,x+w,y+37,x+w,bottom],'#51454b');
+ poly([x+8,bottom,x+8,y+42,peak,y+14,x+w-8,y+42,x+w-8,bottom],'#272129');
+ line(x+1,y+38,peak,y+3,'#9b8178',4);
+ line(peak,y+3,x+w-1,y+38,'#9b8178',4);
+ for(let i=0;i<7;i++){const yy=y+41+i*31;rect(x,yy,8,2,'#85726f');rect(x+w-8,yy,8,2,'#85726f')}
+ pillar(x+2,70,209);pillar(x+w-17,70,209)
+}
+function crack(x,y){
+ for(let i=0;i<7;i++){line(x,y,x+5,y+7,'#1c1a20',1);x+=5;y+=7;line(x,y,x+(i%2?6:-2),y+4,'#14151b',1);x+=(i%2?6:-2);y+=4}
+}
+function banner(x,y,color){
+ rect(x,y,43,76,color);poly([x,y+72,x+21,y+88,x+43,y+72],color);
+ rect(x+4,y+2,35,2,'#a98b68');rect(x+7,y+8,29,1,'#b7906b');
+ circle(x+22,y+35,13,'#9c7563');circle(x+22,y+35,10,color);
+ line(x+11,y+35,x+32,y+35,'#b5916e',2);line(x+22,y+25,x+22,y+46,'#b5916e',2);
+}
+function warmGlow(x,y){
+ for(let r=64;r>=9;r-=8){p.globalAlpha=.018;p.fillStyle='#e99b55';p.fillRect(x-r,y-r,2*r,2*r)}
+ p.globalAlpha=1;
+}
+function windowScene(){
+ rect(27,52,87,150,'#121b25');poly([27,90,70,43,114,90,114,204,27,204],'#1b3340');
+ for(let i=0;i<34;i++){const xx=28+Math.floor(random()*84),yy=73+Math.floor(random()*121);rect(xx,yy,1,2,['#3b5e6a','#6b7981','#a2a3a0'][i%3])}
+ for(const xx of [38,68,92]){line(xx,204,xx-8,133,'#10171c',4);line(xx-8,156,xx+12,132,'#10171c',3)}
+ line(70,50,70,202,'#686467',3);line(27,143,114,143,'#686467',2)
+}
+function rug(){
+ poly([156,315,450,315,501,359,108,359],'#3a242d');
+ poly([164,317,444,317,478,353,131,353],'#6f3b3d');
+ for(let i=0;i<5;i++){line(174+i*17,322,155+i*18,351,'#a46c54',2);line(430-i*17,322,446-i*18,351,'#a46c54',2)}
+ for(let r=9;r<35;r+=9){
+ p.globalAlpha=.85;circle(306,335,r,'#b17d57');circle(306,335,r-2,'#4b2935');p.globalAlpha=1
+ }
+ line(287,335,326,335,'#b48a64',2);line(306,317,306,350,'#b48a64',2)
+}
+function shelves(){
+ rect(434,112,118,12,'#7f5848');rect(439,124,108,54,'#32282a');
+ for(const y of [126,152,176]){
+  rect(438,y+18,112,5,'#7b5843');
+  for(let i=0;i<7;i++){
+   let x=445+i*14;
+   if(i%3===0){rect(x,y+1,8,15,['#8c4946','#76636c','#92755d'][i%3]);rect(x+1,y-2,6,3,'#b4917b')}
+   else{rect(x,y+5,11,12,'#4a6274');rect(x+2,y+3,7,3,'#9d8474');rect(x+2,y+11,7,2,'#cb995f')}
+  }
+ }
+ rect(435,183,116,6,'#755848')
+}
+function curtain(){
+ for(let i=0;i<12;i++){
+  poly([i*9,0,(i+1)*9,0,14+i*6,36,4+i*7,44],'#3d2530');
+  rect(i*8,0,3,25,'#53303b')
+ }
+}
+function taper(x,y,h=13){
+ rect(x,y-h,5,h,'#ead3ad');rect(x+1,y-h-1,3,2,'#a47c5e');rect(x-3,y,12,2,'#5c4341');
+}
+function decor(){
+ const wall=['#392e36','#40353d','#4b4044','#51484b'];
+ bricks(0,0,640,288,wall);
+ rect(0,0,640,23,'#201c24');curtain();
+ windowScene();
+ for(const [x,w] of [[3,126],[126,192],[326,180],[499,137]])arch(x,w);
+ banner(254,63,palette.wine);
+ banner(552,60,'#3f2934');
+ /* lintel and front floor */
+ rect(0,280,640,11,'#857777');rect(0,290,640,8,'#29252a');
+ bricks(0,298,640,63,['#272329','#4a4144','#4b3d40','#544a4b']);
+ for(let x=0;x<640;x+=40){rect(x,297,35,2,'#9a8880');rect(x+2,342,33,2,'#605559')}
+ rug();
+ /* huge fireplace / altar */
+ rect(254,155,150,107,'#3e2b2d');rect(264,169,130,83,'#1b171b');
+ for(let x=265;x<400;x+=21){rect(x,177,2,73,'#72565a');rect(x+3,178,15,3,'#755558')}
+ rect(261,250,140,10,'#a18d81');rect(259,259,150,16,'#5b4546');
+ rect(256,265,157,8,'#30262b');rect(268,273,135,6,'#968278');
+ /* occult arch and gilded runes */
+ circle(329,117,40,'#b38056');circle(329,117,37,'#3e252e');
+ for(let a=0;a<7;a++){const t=a*Math.PI*2/7;const t2=(a+1)*Math.PI*2/7;line(329+Math.cos(t)*29,117+Math.sin(t)*29,329+Math.cos(t2)*29,117+Math.sin(t2)*29,'#b48b61',2)}
+ circle(329,117,16,'#a97a50');circle(329,117,13,'#4d2b33');
+ line(318,122,329,99,'#c89a5c',2);line(329,99,341,122,'#c89a5c',2);
+ /* nearby dried herbs */
+ for(let j=0;j<6;j++){
+  const x=400+j*7,y=91+(j%2)*5;
+  line(x,y,x+2,y+33,'#9c7b57',2);
+  for(let i=10;i<33;i+=6){rect(x-4,y+i,6,3,'#6c6951');rect(x+1,y+i+2,6,3,'#7d6550')}
+ }
+ shelves();
+ rect(0,278,640,4,'#b09c88');
+ for(const x of [10,150,395,627])crack(x,56);
+ /* bricked stairs and scattered cobble */
+ for(let i=0;i<4;i++){rect(247-i*4,274+i*7,161+i*8,5,'#7e6865');rect(247-i*4,279+i*7,161+i*8,3,'#342a31')}
+ for(let i=0;i<35;i++){const x=10+random()*618,y=288+random()*60;rect(x,y,3+random()*9,1,['#796b6c','#484347','#aa8678'][i%3])}
+}
+const positions={
+scroll:{x:70,y:111},grimoire:{x:142,y:217},cauldron:{x:270,y:183},
+tools:{x:472,y:103},candles:{x:460,y:236},elements:{x:567,y:217}
+};
+function objectScroll(){
+ const x=70,y=108;
+ rect(x-4,y-5,71,4,'#906e50');rect(x,y,64,102,'#ae9172');rect(x+7,y+5,50,92,'#cfb494');
+ rect(x+4,y+6,3,85,'#88664f');rect(x+57,y+5,3,89,'#8c6b51');
+ for(let i=0;i<9;i++)rect(x+14,y+20+i*8,36-i%3*5,2,'#9e735b');
+ for(let i=0;i<6;i++)rect(x+17+i*5,y+10,2,5,'#6e554c');
+ rect(x-6,y-9,75,5,'#6d5147');rect(x-6,y+98,75,5,'#6d5147')
+}
+/* THE OPEN GRIMOIRE · bespoke layered sprite, native to the scene, not a floating icon.
+   640×360 logical pixel resolution. Independent object can be hidden or replaced via MODULES. */
+function objectGrimoire(){
+ /* its oak lectern, a real three-dimensional support */
+ rect(156,283,81,5,'#252124');
+ poly([171,251,180,251,174,286,165,286],'#60443b');
+ poly([214,251,222,251,231,286,222,286],'#66483d');
+ rect(171,267,53,5,'#9e7558');rect(175,270,45,3,'#483632');
+ rect(149,245,90,11,'#4d3030');rect(145,244,98,4,'#c29463');
+ rect(149,252,89,3,'#241e22');
+ for(let k=0;k<7;k++){rect(155+k*12,250,7,1,k%2?'#8f634b':'#a87f54')}
+ /* heavy burgundy leather boards and layered pages */
+ poly([136,228,181,216,190,219,237,228,238,247,192,253,187,251,141,252],
+      '#412b30');
+ poly([139,226,182,213,190,219,234,227,234,244,191,250,186,249,143,247],
+      '#a37b60');
+ poly([142,226,185,215,189,218,190,245,146,246],
+      '#d5b891');
+ poly([190,218,234,228,232,246,190,246],
+      '#e4caa3');
+ /* page edges and illustrated border */
+ poly([145,228,183,220,186,223,186,242,148,242],
+      '#f0d9b0');
+ poly([193,222,230,231,230,242,193,243],
+      '#eddbb8');
+ line(188,219,189,246,'#6e4c44',3);
+ rect(185,218,5,4,'#886448');
+ for(let q=0;q<3;q++){
+   line(147,242+q,184,243+q,'#a18a76',1);
+   line(194,244+q,230,243+q,'#9b826e',1)
+ }
+ /* left-page header and minuscule ink lines */
+ rect(151,226,18,2,'#9f6451');
+ rect(152,230,13,1,'#746153');
+ for(let i=0;i<4;i++){
+  line(151,234+i*2,180-(i%2)*5,231+i*2,'#816b58',1);
+ }
+ /* hand-drawn illumination on the right page: star, sun and border */
+ rect(197,226,28,1,'#a47d59');rect(197,240,28,1,'#a47d59');
+ rect(197,227,1,13,'#a47d59');rect(225,227,1,13,'#a47d59');
+ circle(211,234,5,'#a8835c');circle(211,234,3,'#e9c38a');
+ line(211,227,211,241,'#996a50',1);
+ line(204,234,219,234,'#996a50',1);
+ /* one small leather bookmark and the last corner of an old page */
+ poly([231,242,233,230,236,243],'#725048');
+ rect(181,249,5,7,'#994f4d');
+ rect(181,255,5,1,'#c08067');
+ /* contrasting glints anchor it visually to surrounding firelight */
+ rect(142,245,96,2,'#c4925f');rect(148,247,88,2,'#513b32');
+}
+function objectCauldron(){
+ warmGlow(331,227);
+ rect(292,229,81,6,'#211e23');rect(302,235,65,10,'#45434a');
+ poly([289,218,379,218,369,254,355,260,308,260,296,253],'#50515a');
+ rect(289,216,90,7,'#95827a');rect(288,211,94,6,'#302b30');
+ rect(308,260,11,9,'#424149');rect(353,260,11,9,'#424149');
+ rect(311,270,50,2,'#9f7459')
+}
+function objectTools(){
+ rect(454,122,99,5,'#946e55');
+ for(let i=0;i<7;i++){const x=463+i*13;rect(x,127,2,26,'#9b8e7f');rect(x-3,152,8,4,i%2?'#be9676':'#8d7b72');rect(x-1,157,4,13,'#817472')}
+ rect(459,172,87,5,'#b28c66');rect(472,161,13,11,'#84716b');rect(510,161,17,11,'#607182')
+}
+function objectCandles(){
+ const y=268;
+ for(let i=0;i<5;i++){
+ const x=446+i*17,h=17+i%3*5;
+ rect(x,y-h,8,h,['#823e4b','#ae7a49','#b6a16a','#704962','#d0c2ac'][i]);
+ rect(x+2,y-h-1,4,1,'#bb9b84');rect(x-2,y,12,2,'#a58468')
+ }
+ rect(438,271,101,6,'#66443d')
+}
+function objectElements(){
+ rect(552,239,64,38,'#5d4e4b');rect(560,227,47,13,'#c29d6d');
+ for(let i=0;i<4;i++){
+ const x=565+i*11;
+ rect(x,224,8,9,['#ab5c48','#7b93a4','#928071','#9d9671'][i]);
+ }
+ poly([557,248,608,248,601,260,566,260],'#393a3e');
+ rect(562,261,45,4,'#9c8671');rect(573,270,27,4,'#4a3b3f')
+}
+const drawers={scroll:objectScroll,grimoire:objectGrimoire,cauldron:objectCauldron,tools:objectTools,candles:objectCandles,elements:objectElements};
+function paintBackground(){
+ p=bg;seed=43617;rect(0,0,640,360,palette.shadow);
+ decor();
+ MODULES.forEach(m=>{if(m.enabled&&drawers[m.kind])drawers[m.kind]()});
+}
+function fire(t){
+ let flick=Math.floor(t/160);
+ p=ctx;
+ /* discrete fire silhouettes animated frame by frame */
+ const fireColors=['#772e2c','#b44a31','#e87a3e','#ffb45f','#ffdb84'];
+ rect(295,213,72,8,'#aa4f35');
+ for(let layer=0;layer<5;layer++){
+ for(let i=0;i<10;i++){
+ let xx=295+i*7+layer,yy=211-layer*6-(Math.abs((i*17+flick*13)%7-3))*2;
+ let height=8+(i*11+flick*5)%14;
+ if(layer===0)height=8;
+ rect(xx,yy-height,5,yy+height-214>22?6:height,fireColors[layer]);
+ }
+ }
+ for(let i=0;i<8;i++){
+ let x=298+(i*19+flick*11)%70,y=184-((i*13+flick*2)%47);
+ rect(x,y,2,2,i%2?'#e2ae69':'#8a5540');
+ }
+}
+function flames(t){
+ p=ctx;let phase=Math.floor(t/170);
+ for(const [x,y] of [[39,244],[124,248],[243,238],[416,219],[560,176],[615,246]]){
+ rect(x-3,y-12,6,13,'#e3c5a2');rect(x-4,y+1,8,2,'#81634e');
+ rect(x,y-17-(phase%3),3,6,'#ffcb73');rect(x+1,y-19-(phase%2),2,5,'#fff3ad');
+ }
+ fire(t);
+ for(let i=0;i<3;i++){
+ const x=328+(i-1)*14+Math.sin(t/1200+i)*3;
+ const y=178-((t/70+i*21)%65);
+ p.globalAlpha=.24;rect(x,y,7,5,'#a29c9d');p.globalAlpha=1;
+ }
+}
+function tinyBunny(x,y,t,asleep){
+ const s=1, hop=asleep?0:(Math.sin(t/200)>0.7?-2:0),yy=Math.round(y+hop);
+ p=ctx;
+ /* halo, GREY long ears, warm brown body, small ivory wings */
+ rect(x+9,yy-18,14,2,'#eac38d');rect(x+7,yy-16,2,2,'#eac38d');rect(x+23,yy-16,2,2,'#eac38d');
+ rect(x+2,yy-7,7,5,'#d5d0c1');rect(x+25,yy-7,8,5,'#e1d3c5');
+ rect(x+8,yy-11,20,13,'#805c4b');
+ rect(x+7,yy-10,5,13,'#79757b');rect(x+23,yy-10,5,13,'#777377');
+ rect(x+11,yy-12,13,13,'#ab8665');
+ rect(x+13,yy-4,2,2,'#151519');rect(x+21,yy-4,2,2,'#151519');
+ rect(x+17,yy-1,2,1,'#785752');rect(x+9,yy+2,19,4,'#785646');
+ rect(x+6,yy+4,9,3,'#8e6956');rect(x+23,yy+4,9,3,'#8e6956');
+ if(asleep){rect(x+30,yy-18,3,3,'#e0d5c4');rect(x+33,yy-23,3,3,'#e0d5c4');rect(x+36,yy-28,3,3,'#e0d5c4')}
+}
+/* A few moving pixels on the grimoire rather than an overlay rectangle. */
+function grimoireLight(t){
+ p=ctx;
+ const beat=Math.floor(t/240)%28;
+ const glow=(Math.floor(t/380)%5);
+ if(beat>=19 && beat<=23){
+  const x=205+(beat-19)*3;
+  rect(x,229,2,2,'#ffd99a');
+  rect(x-2,231,1,2,'#c69a6c');
+  rect(x+2,232,1,1,'#e8be82');
+ }
+ if(glow===1||glow===3){
+  rect(184,217,2,1,'#edc994');
+  rect(188,247,2,1,'#b98263');
+ }
+ /* An occasional drifting ember crosses the book's lectern. */
+ const cycle=(t/120)%120;
+ if(cycle>58&&cycle<84){
+  const x=166+Math.floor((cycle-58)*1.1);
+  const y=261-Math.floor((cycle-58)*.52);
+  rect(x,y,2,2,'#eeb77d');
+ }
+}
+function lighting(t){
+ p=ctx;
+ let brightness=(Math.floor(t/180)%4);
+ p.globalAlpha=.075+brightness*.012;
+ rect(0,162,640,5,'#f3a45b');
+ p.globalAlpha=1;
+}
+let last=0,ready=false,reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let bunStart=performance.now();
+function render(now){
+ if(!ready)return;
+ if(!reduceMotion&&now-last<80){requestAnimationFrame(render);return}
+ last=now;p=ctx;ctx.drawImage(off,0,0);
+ lighting(now);flames(now);grimoireLight(now);
+ const active=(now-bunStart)/1000;
+ const moving=!reduceMotion&&active%32<20;
+ const bunnyX=moving?Math.round(220+Math.sin(active/6)*115):332;
+ const bunnyY=288;
+ tinyBunny(bunnyX,bunnyY,now,!moving);
+ const bunHit=document.getElementById('bun');
+ bunHit.style.left=((bunnyX-5)/640*100)+'%';
+ bunHit.style.top=((bunnyY-26)/360*100)+'%';
+ if(!reduceMotion)requestAnimationFrame(render)
+}
+function bindModules(){
+ const nav=document.getElementById('nav'),hots=document.getElementById('hotspots');
+ MODULES.filter(m=>m.enabled).forEach(m=>{
+ if(!/^[a-f0-9]{32}$/.test(m.notionId))return;
+ const a=document.createElement('a');a.href=BASE+m.notionId;a.target='_blank';a.rel='noopener noreferrer';a.textContent=m.title;nav.appendChild(a);
+ const h=document.createElement('a');h.href=a.href;h.target='_blank';h.rel='noopener noreferrer';h.className='hit';h.dataset.key=m.kind;h.dataset.name=m.title;h.setAttribute('aria-label','Open '+m.title);hots.appendChild(h)
+ });
+}
+document.getElementById('bun').addEventListener('click',()=>{
+ const msg=document.getElementById('speech');msg.hidden=!msg.hidden;
+ if(!msg.hidden)msg.textContent='zZz... A warm place for a little guardian. 🐰';
+});
+bindModules();paintBackground();ready=true;requestAnimationFrame(render);
+})();
+</script>
+</body>
+</html>
