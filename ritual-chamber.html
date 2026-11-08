@@ -31,7 +31,7 @@ canvas{display:block;width:100%;height:100%;image-rendering:pixelated;image-rend
 .hit[data-key="tools"]{left:68%;top:27%;width:18%;height:24%}
 .hit[data-key="candles"]{left:66%;top:55%;width:15%;height:19%}
 .hit[data-key="elements"]{left:84%;top:49%;width:13%;height:27%}
-#bun{position:absolute;left:50%;top:76%;width:12%;height:18%;border:0;cursor:pointer;background:transparent;color:transparent}
+#bun{position:absolute;left:50%;top:76%;width:7%;height:13%;border:0;cursor:pointer;background:transparent;color:transparent}
 #bun:focus-visible{outline:2px dashed #e5bf89}
 .speech{position:absolute;right:6%;bottom:14%;background:#161317ee;color:#f1d7b5;border:1px solid #9d8266;max-width:270px;padding:9px 13px;font:12px/1.5 Georgia,serif;box-shadow:3px 3px #0d0a0d}
 .speech[hidden]{display:none}
@@ -325,6 +325,9 @@ function render(now){
  const bunnyX=moving?Math.round(220+Math.sin(active/6)*115):332;
  const bunnyY=288;
  tinyBunny(bunnyX,bunnyY,now,!moving);
+ const bunHit=document.getElementById('bun');
+ bunHit.style.left=((bunnyX-5)/640*100)+'%';
+ bunHit.style.top=((bunnyY-26)/360*100)+'%';
  if(!reduceMotion)requestAnimationFrame(render)
 }
 function bindModules(){
