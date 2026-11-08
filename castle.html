@@ -90,6 +90,60 @@
 .links a{background:#28292b;border-color:#555759;color:#e9d9c0}
 .links a:hover{background:#40383c;border-color:#c4986a}
 .foot{background:#15171b;color:#a89c8c}
+
+/* THE CASTLE AWAKENS · polished sprites and a gentle rhythm */
+.map svg#world{height:600px}
+.map{overflow:hidden}
+.relic{width:46px;height:48px;border:0!important;background:transparent!important;box-shadow:none!important}
+.relic:focus-visible{outline:1px dashed #e8ca9a;outline-offset:1px}
+.relic:hover,.relic:focus-visible{box-shadow:none!important;filter:brightness(1.35) drop-shadow(0 0 3px #d2a16e)}
+.relic svg{height:40px!important;width:40px!important;filter:drop-shadow(2px 3px #111517)}
+.floor-labels span{background:linear-gradient(90deg,#1a1a1c44,transparent 30%)}
+.atmosphere{position:absolute;inset:0;pointer-events:none;z-index:3;overflow:hidden}
+.ember{position:absolute;width:10px;height:18px;display:block;clip-path:polygon(50% 0,90% 35%,65% 100%,18% 100%,0 50%);background:#e29c5e;filter:drop-shadow(0 0 4px #a85231);transform-origin:bottom center;animation:torch-flicker 1.65s steps(3,end) infinite}
+.ember-one{left:51%;top:27%;animation-delay:-.4s}
+.ember-two{left:36%;top:91%;width:7px;height:12px;animation-delay:-1.2s}
+.smoke{position:absolute;left:50%;top:26%;width:4px;height:13px;background:#abb0ab55;filter:blur(2px);animation:smoke-rise 5s linear infinite}
+.meteor{position:absolute;left:31%;top:68%;width:2px;height:2px;background:#d8e7e2;box-shadow:-7px 2px #a3bbc0,-13px 5px #869baa;opacity:0;animation:meteor-pass 23s linear infinite}
+.window-glint{position:absolute;top:72%;left:48%;width:2px;height:2px;background:#e4d2b0;opacity:.4;animation:star-shimmer 5.5s steps(2,end) infinite}
+.familiar{z-index:8;position:absolute;left:49%;top:51%;transform:translate(-50%,-50%);width:64px;height:65px;border:0;padding:0;background:transparent;cursor:pointer;filter:drop-shadow(1px 3px 1px #070b0c);transition:left 3.1s steps(22,end),top 3.1s steps(22,end)}
+.familiar:focus-visible{outline:1px dashed #dfc18f;outline-offset:2px}
+.familiar svg{height:60px!important;width:60px!important;display:block;overflow:visible}
+.familiar .bunny-body{transform-origin:32px 51px;animation:bunny-hop .88s steps(3,end) infinite}
+.familiar .halo{animation:halo-sway 2.4s ease-in-out infinite}
+.sleep-sign{position:absolute;left:44px;top:1px;font:700 12px monospace;color:#e5d4b4;letter-spacing:1px;opacity:0;pointer-events:none}
+.familiar.sleeping .sleep-sign{animation:zzz-rise 2.2s ease-out infinite}
+.familiar.sleeping .bunny-body{animation:bunny-breathe 2.5s ease-in-out infinite}
+.familiar.sleeping .halo{animation:none}
+.familiar.talking .bunny-body{animation:none}
+.familiar:hover{filter:drop-shadow(0 0 4px #edc791)}
+.familiar-panel{border:1px solid #6d6558;background:#161a1ddf;padding:11px 12px;margin-top:12px;box-shadow:inset 0 0 0 1px #333330}
+.familiar-panel[hidden]{display:none}
+.familiar-top{display:flex;justify-content:space-between;align-items:center;color:#e2c9a5;font:700 11px monospace;letter-spacing:.5px}
+.familiar-top button{font:700 23px monospace;background:none;border:0;color:#cbbba5;cursor:pointer;line-height:1}
+.familiar-panel p{color:#d5c8b5;font:italic 12px/1.5 Georgia,serif;margin:9px 0 11px}
+.quest-notice{background:#382a29;border:1px solid #775b46;padding:8px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#eac49d;font:10px monospace}
+.quest-notice[hidden]{display:none}
+.quest-notice a{color:#ffdfac;text-decoration:underline}
+.search-label{display:block;color:#b5b6a9;font:700 10px monospace;letter-spacing:.7px;margin:8px 0 6px}
+.search-label small{font-size:9px;color:#a19d97}
+#familiar-search{width:100%;min-height:39px;background:#21262a;color:#eaddc7;border:1px solid #726c64;padding:6px 10px;border-radius:0;font:13px monospace}
+#familiar-search:focus-visible{outline:1px solid #e6bf89}
+.search-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin-top:7px;max-height:120px;overflow-y:auto}
+.search-results a{color:#e1d0bd;border:1px solid #505657;background:#282c2d;font:11px/1.3 monospace;padding:6px;text-decoration:none;overflow-wrap:anywhere}
+.search-results a:hover,.search-results a:focus-visible{color:#ffdfac;border-color:#d4a779}
+.search-results .empty{grid-column:1/-1;color:#afa69f;font:italic 12px Georgia,serif}
+@keyframes torch-flicker{0%,100%{transform:rotate(-8deg) scaleY(.85);opacity:.84}35%{transform:rotate(10deg) scaleY(1.1);opacity:1}65%{transform:rotate(-3deg) scaleY(.73);opacity:.72}}
+@keyframes smoke-rise{0%{transform:translate(0,0);opacity:0}30%{opacity:.5}100%{transform:translate(10px,-31px);opacity:0}}
+@keyframes meteor-pass{0%,70%,100%{transform:translate(0,0);opacity:0}71%{opacity:.9}78%{transform:translate(230px,-45px);opacity:.95}79%{opacity:0}}
+@keyframes star-shimmer{0%,100%{opacity:.08}40%{opacity:.72}60%{opacity:.25}}
+@keyframes bunny-hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes bunny-breathe{0%,100%{transform:translateY(0) scaleY(1)}50%{transform:translateY(1px) scaleY(.98)}}
+@keyframes halo-sway{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.7px)}}
+@keyframes zzz-rise{0%{transform:translateY(2px);opacity:0}30%{opacity:1}100%{transform:translateY(-17px);opacity:0}}
+@media(max-width:570px){.map svg#world{height:525px}.relic{width:34px;height:39px}.relic svg{width:31px!important;height:31px!important}.familiar{width:48px;height:51px}.familiar svg{width:48px!important;height:48px!important}.sleep-sign{left:35px;font-size:10px}.search-results{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.ember,.smoke,.meteor,.window-glint,.familiar .bunny-body,.familiar .halo,.sleep-sign{animation:none!important}.familiar{transition:none!important}}
+
 </style></head><body>
 <main class="atlas">
 <header class="mast"><div><div class="crest">☾ THE WITCH'S LAIR <span style="color:#8f697d">✣</span></div><div class="sub">THE CURSED CASTLE // TOUCH THE RELICS</div></div><div class="mini">MMXXVI<br>28 RELICS ▣</div></header>
@@ -104,7 +158,33 @@
 </defs><g id="art"></g></svg>
 <div id="floor-halo" class="floor-halo" aria-hidden="true"></div>
 <div class="floor-labels" aria-hidden="true"><span>I · GROUNDS</span><span>II · RITUALS</span><span>III · LIBRARY</span><span>IV · STARS</span><span>V · SANCTUM</span></div>
-<nav id="hotspots" class="hotspots" aria-label="Interactive magical objects within the castle"></nav></div>
+<nav id="hotspots" class="hotspots" aria-label="Interactive magical objects within the castle"></nav>
+<div class="atmosphere" aria-hidden="true">
+ <i class="ember ember-one"></i><i class="ember ember-two"></i>
+ <i class="smoke smoke-one"></i><i class="meteor"></i><i class="window-glint"></i>
+</div>
+<button class="familiar" id="ochacha" type="button" aria-label="Ochacha, il piccolo custode del Lair. Apri messaggi e ricerca." title="Ochacha · Familiar">
+ <svg class="bunny-sprite" viewBox="0 0 64 60" aria-hidden="true" shape-rendering="crispEdges">
+ <g class="bunny-body">
+  <path d="M18 19 L9 17 3 22 3 29 9 35 16 33 22 29" fill="#b4afa6" stroke="#665e5b" stroke-width="2"/>
+  <path d="M46 19 L55 17 61 22 61 29 55 35 48 33 42 29" fill="#c6bbae" stroke="#655b56" stroke-width="2"/>
+  <path d="M18 37 L14 44 19 50 43 50 49 44 44 36 Z" fill="#7d5541" stroke="#3c302e" stroke-width="2"/>
+  <path d="M19 44 L15 49 23 52 29 49 M40 44 L47 49 41 52 35 49" fill="#896451" stroke="#44342e" stroke-width="1"/>
+  <path d="M17 20 L12 23 13 36 19 42 25 34 23 24 Z" fill="#70696c" stroke="#443d3d" stroke-width="2"/>
+  <path d="M47 20 L52 23 51 36 45 42 39 34 41 24 Z" fill="#797276" stroke="#443d3d" stroke-width="2"/>
+  <path d="M20 19 L24 15 39 15 44 20 48 27 45 39 39 44 25 44 19 38 16 28 Z" fill="#946b4d" stroke="#48362f" stroke-width="2"/>
+  <path d="M24 21 L38 19 43 26 40 38 26 40 21 34 Z" fill="#a97d5c"/>
+  <rect class="bunny-eye" x="23" y="29" width="3" height="4" fill="#181719"/><rect class="bunny-eye" x="39" y="29" width="3" height="4" fill="#181719"/>
+  <rect x="31" y="35" width="3" height="2" fill="#6b4947"/><path d="M31 38 L33 39 35 38" fill="none" stroke="#4e3933" stroke-width="1"/>
+  <path d="M19 24 L13 21 6 25 13 30 18 29" fill="#ddd1bb" stroke="#9c8d78" stroke-width="1"/>
+  <path d="M45 24 L51 21 58 25 51 30 46 29" fill="#ddd1bb" stroke="#9c8d78" stroke-width="1"/>
+ </g>
+ <ellipse class="halo" cx="32" cy="9" rx="17" ry="4" fill="none" stroke="#e7c17b" stroke-width="3"/>
+ <path d="M19 8 L16 10 M45 8 L48 10" stroke="#f2da9f" stroke-width="1" fill="none"/>
+ </svg>
+ <span class="sleep-sign" aria-hidden="true">zZz</span>
+</button>
+</div>
 <section class="status" aria-live="polite"><div class="status-top"><span class="status-label" id="status-label">▸ SELECT A CHAMBER</span><span class="status-label">● NAVIGATION ONLINE</span></div>
 <div class="status-title" id="status-title">The castle awaits.</div>
 <div class="status-desc" id="status-desc">Touch an object in the castle to open its archive, or select a floor to inspect its items.</div>
@@ -116,6 +196,14 @@
 <button type="button" data-floor="4" aria-label="Inner Sanctum">V</button>
 </div>
 <nav id="links" class="links" aria-label="Objects and links to Notion"></nav>
+<div class="familiar-panel" id="familiar-panel" hidden>
+ <div class="familiar-top"><span>✧ OCHACHA · KEEPER OF THE LAIR</span><button type="button" id="close-familiar" aria-label="Close familiar panel">×</button></div>
+ <p id="familiar-message">A quiet little hop echoes through the castle.</p>
+ <div id="quest-notice" class="quest-notice" hidden><span>✦ MONTHLY QUEST · CODEX REVIEW</span><a id="quest-codex" href="https://app.notion.com/p/fea272a2250d83c38939019cd37226e6" target="_blank" rel="noopener noreferrer">Open the Codex ↗</a></div>
+ <label class="search-label" for="familiar-search">⌕ FIND A ROOM <small>(PAGE TITLES ONLY)</small></label>
+ <input id="familiar-search" type="search" autocomplete="off" placeholder="e.g. Spell Book, Hekate, Astrology…"/>
+ <nav id="search-results" class="search-results" aria-label="Search results"></nav>
+</div>
 </section><footer class="foot"><span>✦ STONE · MOSS · BONE · EMBER</span><span>THE CODEX OF MARCOVICH ☾</span></footer>
 </main>
 <script>
@@ -487,5 +575,80 @@ const nav=document.getElementById('links');nav.replaceChildren();data.links.forE
 }
 document.querySelectorAll('.floor-tabs button').forEach(b=>b.addEventListener('click',()=>selectFloor(Number(b.dataset.floor))));
 paintObjects();selectFloor(1);
+
+/* Ochacha — gentle in-page character; no access to private Notion content or notifications. */
+const ochacha=document.getElementById('ochacha');
+const familiarPanel=document.getElementById('familiar-panel');
+const search=document.getElementById('familiar-search');
+const searchResults=document.getElementById('search-results');
+const message=document.getElementById('familiar-message');
+const mission=document.getElementById('quest-notice');
+const itinerary=[
+ {floor:2,x:31,y:49},{floor:2,x:50,y:53},
+ {floor:3,x:48,y:69},{floor:3,x:74,y:74},
+ {floor:4,x:55,y:91},{floor:4,x:30,y:91},
+ {floor:1,x:71,y:31},{floor:1,x:36,y:31},
+ {floor:0,x:62,y:12},{floor:0,x:33,y:13}
+];
+let wanderIndex=0;
+let resting=false;
+let interacted=false;
+let roamingTimer=null;
+let restTimer=null;
+const reducedMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function gotoStop(stop){
+ if(!stop)return;
+ ochacha.style.left=stop.x+'%';
+ ochacha.style.top=stop.y+'%';
+ if(familiarPanel.hidden)selectFloor(stop.floor,false);
+}
+function setRest(isRest){resting=isRest;ochacha.classList.toggle('sleeping',isRest);ochacha.classList.toggle('talking',interacted&&!isRest)}
+function wander(){
+ if(interacted||reducedMotion)return;
+ if(resting){setRest(false)}
+ wanderIndex=(wanderIndex+1)%itinerary.length;
+ gotoStop(itinerary[wanderIndex]);
+ if(wanderIndex===0||wanderIndex===5){
+   setRest(true);
+   clearTimeout(restTimer);
+   restTimer=setTimeout(()=>{if(!interacted)setRest(false)},12500);
+ }
+}
+function tokyoDay(){
+ const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',day:'numeric'}).formatToParts(new Date());
+ return Number(parts.find(p=>p.type==='day').value);
+}
+const quotes=[
+ 'The library is quiet tonight. Shall we explore?',
+ 'A little hop, a little magic, a little rest.',
+ 'I have found some curious books, Witch.',
+ 'Even guardians need to nap sometimes.'
+];
+function openFamiliar(){
+ interacted=true;setRest(false);
+ familiarPanel.hidden=false;
+ const day=tokyoDay();
+ message.textContent=day===1?'A new month has begun. Your Codex review awaits, Witch.':quotes[Math.floor(Math.random()*quotes.length)];
+ mission.hidden=day!==1;
+ renderMatches('');
+ selectFloor(itinerary[wanderIndex].floor,false);
+ search.focus({preventScroll:true});
+}
+function closeFamiliar(){familiarPanel.hidden=true;interacted=false;setRest(false);search.value=''}
+function renderMatches(q){
+ searchResults.replaceChildren();
+ const term=q.trim().toLocaleLowerCase('it-IT');
+ if(!term)return;
+ const results=rooms.flatMap(room=>room.links.map(item=>({title:item[0],id:item[1],floor:room.title})))
+  .filter(item=>item.title.toLocaleLowerCase('it-IT').includes(term)).slice(0,15);
+ if(!results.length){const p=document.createElement('span');p.className='empty';p.textContent='No matching room title. Try another word.';searchResults.appendChild(p);return}
+ results.forEach(item=>{const a=document.createElement('a');a.href=base+item.id;a.target='_blank';a.rel='noopener noreferrer';a.textContent='⌁ '+item.title;searchResults.appendChild(a)})
+}
+ochacha.addEventListener('click',()=>familiarPanel.hidden?openFamiliar():closeFamiliar());
+document.getElementById('close-familiar').addEventListener('click',closeFamiliar);
+search.addEventListener('input',()=>renderMatches(search.value));
+if(reducedMotion){ochacha.classList.add('sleeping')}
+else{gotoStop(itinerary[0]);setTimeout(()=>{if(!interacted)setRest(true)},6000);roamingTimer=setInterval(wander,12000)}
+
 })();
 </script></body></html>
