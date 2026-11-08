@@ -97,7 +97,7 @@ stone(448,'url(#sanctum)');for(let x=55;x<900;x+=157){arch(x,460,95,115,'#17111d
 for(const x of [120,168,215,473,536,600]){p('M'+x+' 544L'+(x+13)+' '+(506-(x%28))+'L'+(x+25)+' 544Z',x%3===0?'#845685':'#64435f');l(x+9,540,x+15,518,'#a17a9f',2)}
 r(325,510,167,9,'#6a4f5c');r(350,520,118,20,'#342631');r(359,493,97,15,'#3c2b3a');circle(405,488,19,'#6b476b');circle(405,488,12,'#9c7195');
 for(const x of [310,321,492,503])candle(x,500);
-for(let i=0;i<19;i++){const x=i*48+6;y=0;r(x,555+(i%2),28,4,'#453447')}
+for(let i=0;i<19;i++){const x=i*48+6;r(x,555+(i%2),28,4,'#453447')}
 function choose(i){const data=rooms[i];document.querySelectorAll('.room').forEach((b,j)=>b.setAttribute('aria-pressed',j===i?'true':'false'));document.getElementById('status-label').textContent='▸ CHAMBER '+(i+1)+' / 5';document.getElementById('status-title').textContent=data.title;document.getElementById('status-desc').textContent=data.desc;const nav=document.getElementById('links');nav.replaceChildren();data.links.forEach(item=>{const a=document.createElement('a');a.href=base+item[1];a.target='_blank';a.rel='noopener noreferrer';a.textContent='⌁ '+item[0];nav.appendChild(a)})}
 document.querySelectorAll('.room').forEach(b=>b.addEventListener('click',()=>choose(Number(b.dataset.index))));
 choose(2);
