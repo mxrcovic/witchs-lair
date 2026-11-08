@@ -144,44 +144,92 @@
 @media(max-width:570px){.map svg#world{height:525px}.relic{width:34px;height:39px}.relic svg{width:31px!important;height:31px!important}.familiar{width:48px;height:51px}.familiar svg{width:48px!important;height:48px!important}.sleep-sign{left:35px;font-size:10px}.search-results{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.ember,.smoke,.meteor,.window-glint,.familiar .bunny-body,.familiar .halo,.sleep-sign{animation:none!important}.familiar{transition:none!important}}
 
+
+/* V. D · architecture-first: five taller floors, distinct materials, no badge overlays. */
+.atlas{background:#1b1b20;border-color:#626063}
+.map{background:#1b1c21}
+.map svg#world{height:875px;width:100%;display:block;image-rendering:pixelated}
+.map #art{filter:saturate(.91) contrast(1.19)}
+.map:after{background:linear-gradient(90deg,#11111540,transparent 19%,transparent 82%,#10111946)}
+.floor-halo{background:linear-gradient(90deg,#bd987219,transparent 38%);border-color:#c7ae8e25}
+.floor-labels span{color:#cabfb0;text-shadow:1px 2px #101114;opacity:.91}
+.scenic-relic{cursor:pointer;outline:0}
+.scenic-relic .scenic-pixel-object{filter:drop-shadow(1px 3px 1px #090b0e)}
+.scenic-relic:hover .scenic-pixel-object,.scenic-relic:focus .scenic-pixel-object{filter:brightness(1.27) drop-shadow(0 0 3px #e1b478)}
+.scenic-relic:focus .relic-click-area{stroke:#e7c99d;stroke-width:2;stroke-dasharray:4 3;fill:transparent}
+.familiar{width:34px;height:37px;transform:translate(-50%,-50%);filter:drop-shadow(1px 2px 1px #090c0e);transition:none!important;animation:ochacha-patrol 52s steps(28,end) infinite}
+.familiar svg{width:34px!important;height:34px!important}
+.familiar .bunny-body{animation:bunny-hop .82s steps(3,end) infinite}
+.familiar.sleeping .bunny-body{animation:bunny-breathe 2.5s ease-in-out infinite}
+.familiar.sleeping,.familiar.talking{animation-play-state:paused}
+.familiar .sleep-sign{font-size:9px;left:28px;top:-4px}
+@keyframes ochacha-patrol{
+0%,5%{left:23%;top:10%}
+11%{left:48%;top:10%}
+19%{left:72%;top:10%}
+24%{left:77%;top:30%}
+32%{left:42%;top:30%}
+38%{left:25%;top:30%}
+45%{left:25%;top:48%}
+52%{left:53%;top:48%}
+60%{left:78%;top:48%}
+67%{left:72%;top:69%}
+74%{left:33%;top:69%}
+82%{left:36%;top:89%}
+90%{left:64%;top:89%}
+100%{left:23%;top:10%}
+}
+@media(max-width:570px){
+.map svg#world{height:800px}
+.familiar{width:28px;height:31px}
+.familiar svg{width:28px!important;height:28px!important}
+.familiar .sleep-sign{font-size:8px;left:23px}
+}
+@media(prefers-reduced-motion:reduce){.familiar{animation:none!important;left:50%!important;top:49%!important}}
+
 </style></head><body>
 <main class="atlas">
 <header class="mast"><div><div class="crest">☾ THE WITCH'S LAIR <span style="color:#8f697d">✣</span></div><div class="sub">THE CURSED CASTLE // TOUCH THE RELICS</div></div><div class="mini">MMXXVI<br>28 RELICS ▣</div></header>
 <div class="map">
-<svg id="world" viewBox="0 0 900 565" preserveAspectRatio="none" role="img" aria-label="Pixel styled dark gothic castle cross-section: graveyard, ritual hall, forbidden library, observatory, and subterranean sanctum">
+<svg id="world" viewBox="0 0 900 885" preserveAspectRatio="none" role="img" aria-label="Pixel styled dark gothic castle cross-section: graveyard, ritual hall, forbidden library, observatory, and subterranean sanctum">
 <defs>
-<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#334047"/><stop offset="1" stop-color="#172025"/></linearGradient>
-<linearGradient id="ritual" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3d4140"/><stop offset="1" stop-color="#222c2b"/></linearGradient>
-<linearGradient id="library" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3a403c"/><stop offset="1" stop-color="#1e2828"/></linearGradient>
-<linearGradient id="observatory" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#2d4143"/><stop offset="1" stop-color="#182a2e"/></linearGradient>
-<linearGradient id="sanctum" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#353d3b"/><stop offset="1" stop-color="#141c1c"/></linearGradient>
-</defs><g id="art"></g></svg>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#333b46"/><stop offset="1" stop-color="#19222a"/></linearGradient>
+<linearGradient id="ritual" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#473035"/><stop offset="1" stop-color="#231a1d"/></linearGradient>
+<linearGradient id="library" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#38312d"/><stop offset="1" stop-color="#211b1b"/></linearGradient>
+<linearGradient id="observatory" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#27394e"/><stop offset="1" stop-color="#151d2c"/></linearGradient>
+<linearGradient id="sanctum" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#30252c"/><stop offset="1" stop-color="#16131a"/></linearGradient>
+</defs><g id="art" transform="scale(1 1.565)"></g></svg>
 <div id="floor-halo" class="floor-halo" aria-hidden="true"></div>
 <div class="floor-labels" aria-hidden="true"><span>I · GROUNDS</span><span>II · RITUALS</span><span>III · LIBRARY</span><span>IV · STARS</span><span>V · SANCTUM</span></div>
-<nav id="hotspots" class="hotspots" aria-label="Interactive magical objects within the castle"></nav>
+
 <div class="atmosphere" aria-hidden="true">
  <i class="ember ember-one"></i><i class="ember ember-two"></i>
  <i class="smoke smoke-one"></i><i class="meteor"></i><i class="window-glint"></i>
 </div>
 <button class="familiar" id="ochacha" type="button" aria-label="Ochacha, il piccolo custode del Lair. Apri messaggi e ricerca." title="Ochacha · Familiar">
- <svg class="bunny-sprite" viewBox="0 0 64 60" aria-hidden="true" shape-rendering="crispEdges">
- <g class="bunny-body">
-  <path d="M18 19 L9 17 3 22 3 29 9 35 16 33 22 29" fill="#b4afa6" stroke="#665e5b" stroke-width="2"/>
-  <path d="M46 19 L55 17 61 22 61 29 55 35 48 33 42 29" fill="#c6bbae" stroke="#655b56" stroke-width="2"/>
-  <path d="M18 37 L14 44 19 50 43 50 49 44 44 36 Z" fill="#7d5541" stroke="#3c302e" stroke-width="2"/>
-  <path d="M19 44 L15 49 23 52 29 49 M40 44 L47 49 41 52 35 49" fill="#896451" stroke="#44342e" stroke-width="1"/>
-  <path d="M17 20 L12 23 13 36 19 42 25 34 23 24 Z" fill="#70696c" stroke="#443d3d" stroke-width="2"/>
-  <path d="M47 20 L52 23 51 36 45 42 39 34 41 24 Z" fill="#797276" stroke="#443d3d" stroke-width="2"/>
-  <path d="M20 19 L24 15 39 15 44 20 48 27 45 39 39 44 25 44 19 38 16 28 Z" fill="#946b4d" stroke="#48362f" stroke-width="2"/>
-  <path d="M24 21 L38 19 43 26 40 38 26 40 21 34 Z" fill="#a97d5c"/>
-  <rect class="bunny-eye" x="23" y="29" width="3" height="4" fill="#181719"/><rect class="bunny-eye" x="39" y="29" width="3" height="4" fill="#181719"/>
-  <rect x="31" y="35" width="3" height="2" fill="#6b4947"/><path d="M31 38 L33 39 35 38" fill="none" stroke="#4e3933" stroke-width="1"/>
-  <path d="M19 24 L13 21 6 25 13 30 18 29" fill="#ddd1bb" stroke="#9c8d78" stroke-width="1"/>
-  <path d="M45 24 L51 21 58 25 51 30 46 29" fill="#ddd1bb" stroke="#9c8d78" stroke-width="1"/>
- </g>
- <ellipse class="halo" cx="32" cy="9" rx="17" ry="4" fill="none" stroke="#e7c17b" stroke-width="3"/>
- <path d="M19 8 L16 10 M45 8 L48 10" stroke="#f2da9f" stroke-width="1" fill="none"/>
- </svg>
+ <svg class="bunny-sprite" viewBox="0 0 68 57" role="img" aria-label="A small brown lop-eared rabbit with pale wings and a halo" shape-rendering="crispEdges">
+<g class="bunny-body">
+<!-- two ivory feathered wings emerging behind his rounded shoulders -->
+<path d="M21 23 L11 16 L3 19 L7 27 L3 31 L11 35 L20 31 Z" fill="#d5d0c2" stroke="#7c7974" stroke-width="2"/>
+<path d="M47 23 L57 16 L65 19 L61 27 L65 31 L57 35 L48 31 Z" fill="#ddd6c7" stroke="#7c7974" stroke-width="2"/>
+<path d="M9 23 L15 26 L10 30 M59 23 L53 26 L58 30" fill="none" stroke="#b3afa5" stroke-width="2"/>
+<!-- low, round brown body and two paws -->
+<path d="M18 32 L23 28 L45 28 L50 33 L51 44 L46 50 L20 50 L15 44 Z" fill="#765240" stroke="#44342e" stroke-width="2"/>
+<path d="M23 42 L45 42 L47 49 L21 49 Z" fill="#9a7459"/>
+<rect x="15" y="47" width="13" height="5" rx="2" fill="#7c5c4c"/><rect x="40" y="47" width="13" height="5" rx="2" fill="#7c5c4c"/>
+<!-- face and long drooping GREY ears on both sides -->
+<path d="M22 17 L17 18 L11 24 L10 39 L15 45 L22 40 L26 30 Z" fill="#6e6c70" stroke="#474449" stroke-width="2"/>
+<path d="M46 17 L51 18 L57 24 L58 39 L53 45 L46 40 L42 30 Z" fill="#79777a" stroke="#474449" stroke-width="2"/>
+<path d="M16 25 L14 35 L17 39 M52 25 L54 35 L51 39" fill="none" stroke="#999499" stroke-width="2"/>
+<path d="M25 19 L29 15 L39 15 L43 19 L49 26 L47 37 L42 42 L26 42 L21 37 L19 27 Z" fill="#9d7458" stroke="#4e3c34" stroke-width="2"/>
+<path d="M28 21 L40 21 L44 28 L42 38 L26 38 L24 29 Z" fill="#b08a6a"/>
+<rect class="bunny-eye" x="25" y="30" width="3" height="3" rx="0" fill="#19181a"/>
+<rect class="bunny-eye" x="41" y="30" width="3" height="3" rx="0" fill="#19181a"/>
+<rect x="34" y="36" width="2" height="2" fill="#765050"/>
+<path d="M32 39 L34 40 L36 39" stroke="#654c45" stroke-width="1" fill="none"/>
+</g>
+<ellipse class="halo" cx="34" cy="8" rx="17" ry="4" fill="none" stroke="#efc988" stroke-width="3"/>
+</svg>
  <span class="sleep-sign" aria-hidden="true">zZz</span>
 </button>
 </div>
@@ -368,7 +416,7 @@ shadow:'#101114',black:'#15191b',charcoal:'#21272b',rock:'#343b3e',
 slate:'#414b50',stone:'#59646a',ash:'#788287',bone:'#c3b7a5',
 gold:'#bc9367',ember:'#d98753',fire:'#f4bc78',rust:'#754b45',
 oxblood:'#63363e',violet:'#745774',arcane:'#a389ae',teal:'#6f9195',
-moss:'#455143',sage:'#6e7965',deadleaf:'#86614c',oak:'#514239'
+moss:'#4f574a',sage:'#667264',deadleaf:'#8b6552',oak:'#514239'
 };
 function box(x,y,w,h,c){r(Math.round(x),Math.round(y),Math.round(w),Math.round(h),c)}
 function rockLine(x,y,w,shade){box(x,y,w,2,shade)}
@@ -500,7 +548,7 @@ box(517,87,42,7,'#777067');candle(529,88,2);
 /* storm vane */
 l(684,84,684,34,'#979895',4);l(669,45,699,45,PX.ash,2);p('M689 40L702 44L689 49Z',PX.ember);l(683,41,672,33,'#858681',2);
 /* II · RITUAL CHAMBER — iron, oak and dying fire */
-masonry(112,113,'#2c3235');
+masonry(112,113,'#383035');
 for(let x=35;x<900;x+=143){archway(x,124,112,89);pillar(x+5,147,61);pillar(x+102,147,61)}
 for(const x of [28,317,609,865])creepingVine(x,116,90);
 box(0,218,900,6,'#586063');box(170,192,103,19,'#514137');box(180,185,82,8,'#8d7963');
@@ -515,7 +563,7 @@ for(const x of [666,707,746,788]){
 }
 candle(808,198,2);
 /* III · FORBIDDEN LIBRARY — elaborate shelves and one violet window */
-masonry(225,112,'#2c3034');
+masonry(225,112,'#352f2d');
 for(let x=33;x<900;x+=164){archway(x,237,124,88);pillar(x+4,250,74);pillar(x+112,250,74)}
 shelf(44,245,95,74);shelf(170,245,95,74);shelf(590,245,98,74);shelf(716,245,95,74);
 glass(391,233,116,92,'#4c4a59');
@@ -525,7 +573,7 @@ box(473,308,66,7,'#6e5c50');box(490,290,34,19,'#34343a');circle(505,299,9,'#8575
 for(const x of [302,563,670,828])candle(x,317,x===563?2:1);
 creepingVine(850,229,94);
 /* IV · ARCANE OBSERVATORY — blue hour and star-glass */
-masonry(338,112,'#28313b');
+masonry(338,112,'#2a3647');
 for(let x=48;x<900;x+=165){archway(x,348,124,91);pillar(x+3,365,76);pillar(x+116,365,76)}
 glass(346,346,130,86,'#253c4b');
 for(let j=0;j<58;j++){
@@ -543,7 +591,7 @@ l(374,408,364,430,'#7d6d5f',4);l(374,408,391,430,'#7d6d5f',4);
 box(498,420,27,7,'#766456');circle(511,412,16,'#5e7881');circle(511,412,11,'#88a3a7');
 candle(635,426,2);bramble(6,438,885);
 /* V · INNER SANCTUM — obsidian with bone, a single arcane mirror */
-masonry(450,115,'#24282e');
+masonry(450,115,'#30262d');
 for(let x=42;x<900;x+=166){archway(x,462,125,96);pillar(x+3,475,74);pillar(x+117,475,74)}
 for(const x of [31,841])creepingVine(x,454,88);
 box(327,516,210,7,'#655c57');box(348,524,172,13,'#403d3c');
@@ -567,7 +615,35 @@ const placements=[
 [[25,66],[43,66],[61,66],[79,66],[35,74],[53,74],[71,74]],
 [[41,89],[65,89]]
 ];
-function paintObjects(){const host=document.getElementById('hotspots');host.replaceChildren();rooms.forEach((room,ri)=>{room.links.forEach((item,i)=>{const a=document.createElement('a');a.className='relic';a.href=base+item[1];a.target='_blank';a.rel='noopener noreferrer';a.setAttribute('aria-label','Open '+item[0]+' in Notion');a.title=item[0];a.dataset.tip=item[0];const pos=placements[ri][i];a.style.left=pos[0]+'%';a.style.top=pos[1]+'%';a.appendChild(sprite(itemKinds[ri][i]));a.addEventListener('mouseenter',()=>selectFloor(ri,false));a.addEventListener('focus',()=>selectFloor(ri,false));host.appendChild(a)})})}
+
+/* Each object is now a native SVG scene element, NOT an HTML badge floating above it.
+   Only invisible hit geometry, focus outline and hover tooltip are interactive. */
+function paintObjects(){
+ const root=document.getElementById('world'),ns='http://www.w3.org/2000/svg';
+ const old=root.querySelector('#relic-layer');if(old)old.remove();
+ const layer=document.createElementNS(ns,'g');layer.id='relic-layer';root.appendChild(layer);
+ const bases=['#4b4841','#5c4440','#594b3c','#525763','#4b3941'];
+ rooms.forEach((room,ri)=>room.links.forEach((item,i)=>{
+  const pos=placements[ri][i],x=900*pos[0]/100,y=885*pos[1]/100;
+  const link=document.createElementNS(ns,'a');
+  link.setAttribute('href',base+item[1]);link.setAttribute('target','_blank');link.setAttribute('rel','noopener noreferrer');
+  link.setAttribute('class','scenic-relic');link.setAttribute('tabindex','0');
+  link.setAttribute('aria-label','Open '+item[0]);
+  const title=document.createElementNS(ns,'title');title.textContent=item[0];link.appendChild(title);
+  const shadow=document.createElementNS(ns,'ellipse');shadow.setAttribute('cx',x);shadow.setAttribute('cy',y+24);shadow.setAttribute('rx',23);shadow.setAttribute('ry',4);shadow.setAttribute('fill','#0b0c10');shadow.setAttribute('opacity','.65');link.appendChild(shadow);
+  const s=sprite(itemKinds[ri][i]);
+  s.setAttribute('x',x-24);s.setAttribute('y',y-23);s.setAttribute('width',48);s.setAttribute('height',48);
+  s.setAttribute('class','scenic-pixel-object');s.setAttribute('preserveAspectRatio','xMidYMid meet');
+  link.appendChild(s);
+  const invisible=document.createElementNS(ns,'rect');
+  for(const [k,v] of Object.entries({x:x-30,y:y-31,width:60,height:62,fill:'transparent'}))invisible.setAttribute(k,v);
+  invisible.setAttribute('class','relic-click-area');link.appendChild(invisible);
+  link.addEventListener('mouseenter',()=>selectFloor(ri,false));
+  link.addEventListener('focus',()=>selectFloor(ri,false));
+  layer.appendChild(link);
+ }));
+}
+
 function selectFloor(i,keepFocus=true){const data=rooms[i];document.getElementById('floor-halo').style.top=i*20+'%';document.getElementById('status-label').textContent='▸ FLOOR '+['I','II','III','IV','V'][i]+' / 5  ·  '+data.links.length+' RELICS';
 document.getElementById('status-title').textContent=data.title;document.getElementById('status-desc').textContent=data.desc;
 document.querySelectorAll('.floor-tabs button').forEach(b=>b.setAttribute('aria-pressed',Number(b.dataset.floor)===i?'true':'false'));
@@ -648,8 +724,10 @@ function renderMatches(q){
 ochacha.addEventListener('click',()=>familiarPanel.hidden?openFamiliar():closeFamiliar());
 document.getElementById('close-familiar').addEventListener('click',closeFamiliar);
 search.addEventListener('input',()=>renderMatches(search.value));
-if(reducedMotion){ochacha.classList.add('sleeping')}
-else{gotoStop(itinerary[0]);setTimeout(()=>{if(!interacted)setRest(true)},6000);roamingTimer=setInterval(wander,12000)}
+if(reducedMotion){ochacha.classList.add('sleeping')}else{
+setTimeout(()=>{if(!interacted)setRest(true)},16000);
+roamingTimer=setInterval(()=>{if(!interacted){setRest(false);setTimeout(()=>{if(!interacted)setRest(true)},8000)}},25000);
+}
 
 })();
 </script></body></html>
