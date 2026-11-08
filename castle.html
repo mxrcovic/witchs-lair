@@ -600,7 +600,7 @@ function gotoStop(stop){
  if(!stop)return;
  ochacha.style.left=stop.x+'%';
  ochacha.style.top=stop.y+'%';
- if(familiarPanel.hidden)selectFloor(stop.floor,false);
+ /* Wandering does not interrupt the room the visitor is browsing. */
 }
 function setRest(isRest){resting=isRest;ochacha.classList.toggle('sleeping',isRest);ochacha.classList.toggle('talking',interacted&&!isRest)}
 function wander(){
@@ -632,6 +632,7 @@ function openFamiliar(){
  mission.hidden=day!==1;
  renderMatches('');
  selectFloor(itinerary[wanderIndex].floor,false);
+ familiarPanel.scrollIntoView({block:'nearest',behavior:reducedMotion?'auto':'smooth'});
  search.focus({preventScroll:true});
 }
 function closeFamiliar(){familiarPanel.hidden=true;interacted=false;setRest(false);search.value=''}
