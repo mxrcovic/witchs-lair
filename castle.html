@@ -30,30 +30,77 @@
 .foot{display:flex;justify-content:space-between;padding:6px 14px;border-top:1px dotted #5a4452;color:#897788;font:9px/1.3 monospace;letter-spacing:.6px;background:#100c14}
 @media(max-width:480px){.mast{padding:9px 10px}.crest{font-size:10px;letter-spacing:1px}.sub{font-size:8px;letter-spacing:0}.mini{font-size:8px}.map svg{height:400px}.room{padding:4px 6px}.room .tag{max-width:87%;padding:7px;gap:5px}.room .tagname{font-size:10.8px;letter-spacing:0}.room .roman{font-size:13px}.room .hint{font-size:8px}.status{padding:9px 10px}.status-title{font-size:15px}.links a{font-size:10px;padding:7px 6px}.foot{font-size:8px;padding:5px 10px}}
 @media(prefers-reduced-motion:reduce){.room .tag{transition:none}}
+
+/* CURSED CASTLE V. B — Objects are real navigation, floor labels are decorative. */
+:root{--void:#0e1213;--stone:#252e2c;--ink:#e1d5bf;--faint:#a0a79a;--violet:#62526b;--border:#60615a;--glow:#beab88;--ember:#e28b48}
+.atlas{background:#111718;border-color:#434c46;box-shadow:inset 0 0 0 2px #202a27}
+.mast{background:#151c1c;border-bottom:2px solid #4c544b}
+.crest{color:#e0d6c4}.crest span{color:#a2625b!important}
+.sub,.mini{color:#a5ada4}
+.map{background:#161f20;border-bottom:2px solid #555a51}
+.map #art{filter:saturate(.9) contrast(1.15)}
+.map:after{background:linear-gradient(90deg,#0a12138a 0%,transparent 25%,transparent 75%,#1319185c 100%);pointer-events:none}
+.floor-halo{position:absolute;inset:auto 0;top:40%;height:20%;z-index:1;pointer-events:none;background:linear-gradient(90deg,#4c674c2c,#a9a07a13,transparent 83%);border-top:1px solid #bcaa813a;border-bottom:1px solid #bcaa813a;transition:top .15s steps(1,end)}
+.floor-labels{position:absolute;inset:0;z-index:2;pointer-events:none;display:flex;flex-direction:column}
+.floor-labels span{height:20%;padding:7px 8px;color:#b9c2b3;font:700 10px/1.4 monospace;letter-spacing:1px;text-shadow:1px 2px #0d1315;opacity:.8}
+.hotspots{position:absolute;inset:0;z-index:4;pointer-events:none}
+.relic{position:absolute;transform:translate(-50%,-50%);width:42px;height:43px;border:1px solid #919a7566;border-radius:0;background:#182020a8;box-shadow:inset 0 0 0 1px #0c1111,2px 3px 0 #070b0a6b;display:grid;place-items:center;cursor:pointer;pointer-events:auto;color:#e5dfc6;text-decoration:none;transition:background .1s,border-color .1s}
+.relic svg{height:32px!important;width:32px!important;max-height:32px;image-rendering:pixelated;shape-rendering:crispEdges;filter:drop-shadow(1px 2px #0b1111)}
+.relic:hover,.relic:focus-visible{z-index:6;border-color:#f2c887;background:#28372e;outline:1px solid #eccd93}
+.relic:focus-visible{outline-offset:1px}
+.relic::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:#11181a;border:1px solid #9b9275;color:#f4e5cc;padding:6px 8px;white-space:nowrap;font:10px monospace;opacity:0;visibility:hidden;pointer-events:none;z-index:8;box-shadow:2px 2px #060908}
+.relic:hover::after,.relic:focus-visible::after{opacity:1;visibility:visible}
+.status{background:#151b1b;color:#e1d5bf;border-color:#5c6258}
+.status-label{color:#a9baad}
+.status-title{color:#e7ceb0}
+.status-desc{color:#bbc0b1}
+.floor-tabs{display:flex;gap:5px;margin:7px 0 9px}
+.floor-tabs button{flex:1;min-height:33px;cursor:pointer;border:1px solid #636c60;background:#222b29;color:#c6c8b5;font:bold 12px/1 monospace}
+.floor-tabs button[aria-pressed=true],.floor-tabs button:hover,.floor-tabs button:focus-visible{background:#485344;color:#f1e5c7;border-color:#c6a87b;outline:none;box-shadow:inset 0 0 0 1px #101815}
+.links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;max-height:190px;overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#767d6a #151c1a;scrollbar-width:thin;padding-right:3px}
+.links a{display:flex;align-items:center;gap:8px;min-width:0;overflow-wrap:anywhere;padding:6px 7px;border:1px solid #566358;background:#212a28;color:#e1d8c4;font:11px/1.25 monospace;text-decoration:none;min-height:47px;box-shadow:inset 0 0 0 1px #141a17}
+.links a:hover,.links a:focus-visible{background:#35463b;border-color:#c5a677;color:#f9e6c8}
+.links a svg{width:27px;height:27px;min-width:27px;image-rendering:pixelated;shape-rendering:crispEdges}
+.foot{background:#0f1515;color:#929e8f;border-color:#515a51}
+@media(max-width:570px){
+.floor-labels span{font-size:8px;padding:4px 5px;letter-spacing:0}
+.relic{width:29px;height:32px;border-color:#83917d8c}
+.relic svg{width:25px!important;height:25px!important}
+.relic::after{display:none}
+.links{grid-template-columns:repeat(2,minmax(0,1fr));max-height:210px}
+.links a{font-size:10px;min-height:48px;gap:5px;padding:6px 5px}
+.links a svg{width:26px;height:26px;min-width:26px}
+.floor-tabs button{min-height:39px}
+}
+@media(prefers-reduced-motion:reduce){.floor-halo,.relic{transition:none}}
+
 </style></head><body>
 <main class="atlas">
-<header class="mast"><div><div class="crest">☾ THE WITCH'S LAIR <span style="color:#8f697d">✣</span></div><div class="sub">THE CURSED CASTLE // INTERACTIVE ATLAS</div></div><div class="mini">EST. MMXXVI<br>5 CHAMBERS ▣</div></header>
+<header class="mast"><div><div class="crest">☾ THE WITCH'S LAIR <span style="color:#8f697d">✣</span></div><div class="sub">THE CURSED CASTLE // TOUCH THE RELICS</div></div><div class="mini">MMXXVI<br>28 RELICS ▣</div></header>
 <div class="map">
 <svg id="world" viewBox="0 0 900 565" preserveAspectRatio="none" role="img" aria-label="Pixel styled dark gothic castle cross-section: graveyard, ritual hall, forbidden library, observatory, and subterranean sanctum">
 <defs>
-<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#303142"/><stop offset="1" stop-color="#15111b"/></linearGradient>
-<linearGradient id="ritual" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#342e2d"/><stop offset="1" stop-color="#1c1720"/></linearGradient>
-<linearGradient id="library" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#302d30"/><stop offset="1" stop-color="#18151c"/></linearGradient>
-<linearGradient id="observatory" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#27333d"/><stop offset="1" stop-color="#151824"/></linearGradient>
-<linearGradient id="sanctum" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#25252a"/><stop offset="1" stop-color="#100e16"/></linearGradient>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#334047"/><stop offset="1" stop-color="#172025"/></linearGradient>
+<linearGradient id="ritual" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3d4140"/><stop offset="1" stop-color="#222c2b"/></linearGradient>
+<linearGradient id="library" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3a403c"/><stop offset="1" stop-color="#1e2828"/></linearGradient>
+<linearGradient id="observatory" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#2d4143"/><stop offset="1" stop-color="#182a2e"/></linearGradient>
+<linearGradient id="sanctum" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#353d3b"/><stop offset="1" stop-color="#141c1c"/></linearGradient>
 </defs><g id="art"></g></svg>
-<div class="rooms" aria-label="Choose a castle floor">
-<button type="button" class="room" data-index="0" aria-pressed="false"><span class="tag"><span class="roman">I</span><span><span class="tagname">HAUNTED GROUNDS</span><br><span class="hint">HERBS · GARDEN · CEMETERY</span></span></span></button>
-<button type="button" class="room" data-index="1" aria-pressed="false"><span class="tag"><span class="roman">II</span><span><span class="tagname">RITUAL CHAMBER</span><br><span class="hint">SPELLS · TOOLS · CRAFT</span></span></span></button>
-<button type="button" class="room" data-index="2" aria-pressed="false"><span class="tag"><span class="roman">III</span><span><span class="tagname">FORBIDDEN LIBRARY</span><br><span class="hint">BOOKS · RESEARCH · LORE</span></span></span></button>
-<button type="button" class="room" data-index="3" aria-pressed="false"><span class="tag"><span class="roman">IV</span><span><span class="tagname">ARCANE OBSERVATORY</span><br><span class="hint">STARS · DIVINATION · TIME</span></span></span></button>
-<button type="button" class="room" data-index="4" aria-pressed="false"><span class="tag"><span class="roman">V</span><span><span class="tagname">INNER SANCTUM</span><br><span class="hint">THE CODEX · MIRRORS · SELF</span></span></span></button>
-</div></div>
+<div id="floor-halo" class="floor-halo" aria-hidden="true"></div>
+<div class="floor-labels" aria-hidden="true"><span>I · GROUNDS</span><span>II · RITUALS</span><span>III · LIBRARY</span><span>IV · STARS</span><span>V · SANCTUM</span></div>
+<nav id="hotspots" class="hotspots" aria-label="Interactive magical objects within the castle"></nav></div>
 <section class="status" aria-live="polite"><div class="status-top"><span class="status-label" id="status-label">▸ SELECT A CHAMBER</span><span class="status-label">● NAVIGATION ONLINE</span></div>
 <div class="status-title" id="status-title">The castle awaits.</div>
-<div class="status-desc" id="status-desc">Choose one of the five floors to reveal the doors to your Notion archives.</div>
-<nav id="links" class="links" aria-label="Doors to Notion"><span class="status-label">A PERSONAL GRIMOIRE · A LIVING ARCHIVE</span></nav>
-</section><footer class="foot"><span>✦ OBSIDIAN · VIOLET · ASH · EMBER</span><span>THE CODEX OF MARCOVICH ☾</span></footer>
+<div class="status-desc" id="status-desc">Touch an object in the castle to open its archive, or select a floor to inspect its items.</div>
+<div class="floor-tabs" role="group" aria-label="Inspect a castle floor">
+<button type="button" data-floor="0" aria-label="Haunted Grounds">I</button>
+<button type="button" data-floor="1" aria-label="Ritual Chamber">II</button>
+<button type="button" data-floor="2" aria-label="Forbidden Library">III</button>
+<button type="button" data-floor="3" aria-label="Arcane Observatory">IV</button>
+<button type="button" data-floor="4" aria-label="Inner Sanctum">V</button>
+</div>
+<nav id="links" class="links" aria-label="Objects and links to Notion"></nav>
+</section><footer class="foot"><span>✦ STONE · MOSS · BONE · EMBER</span><span>THE CODEX OF MARCOVICH ☾</span></footer>
 </main>
 <script>
 (function(){
@@ -210,10 +257,10 @@ function r(x,y,w,h,c,more={}){return el('rect',{x,y,width:w,height:h,fill:c,...m
 function p(d,c,more={}){return el('path',{d,fill:c,...more})}
 function l(x1,y1,x2,y2,c,w=2){return el('line',{x1,y1,x2,y2,stroke:c,'stroke-width':w})}
 function circle(x,y,rad,c){return el('circle',{cx:x,cy:y,r:rad,fill:c})}
-function stone(y,bg){r(0,y,900,112,bg);for(let j=0;j<62;j++){const x=Math.floor(rnd()*900),yy=Math.floor(y+7+rnd()*94);r(x,yy,17+Math.floor(rnd()*28),2, j%3===0?'#514554':'#332e39',{opacity:.38})}r(0,y+103,900,9,'#130f18');for(let x=0;x<900;x+=50){r(x,y+105,45,3,'#524453');r(x+3,y+108,19,2,'#3d3441')}}
-function arch(x,y,h=90,w=95,col='#1a1620'){p('M'+x+' '+(y+h)+'V'+(y+30)+'L'+(x+w/2)+' '+y+'L'+(x+w)+' '+(y+30)+'V'+(y+h)+'Z',col,{stroke:'#53545a','stroke-width':3});p('M'+(x+8)+' '+(y+h)+'V'+(y+36)+'L'+(x+w/2)+' '+(y+11)+'L'+(x+w-8)+' '+(y+36)+'V'+(y+h)+'Z','#18141d',{opacity:'.45'})}
+function stone(y,bg){r(0,y,900,112,bg);for(let j=0;j<62;j++){const x=Math.floor(rnd()*900),yy=Math.floor(y+7+rnd()*94);r(x,yy,17+Math.floor(rnd()*28),2, j%3===0?'#6a756d':'#464e4d',{opacity:.38})}r(0,y+103,900,9,'#130f18');for(let x=0;x<900;x+=50){r(x,y+105,45,3,'#68736b');r(x+3,y+108,19,2,'#3c4643')}}
+function arch(x,y,h=90,w=95,col='#293330'){p('M'+x+' '+(y+h)+'V'+(y+30)+'L'+(x+w/2)+' '+y+'L'+(x+w)+' '+(y+30)+'V'+(y+h)+'Z',col,{stroke:'#53545a','stroke-width':3});p('M'+(x+8)+' '+(y+h)+'V'+(y+36)+'L'+(x+w/2)+' '+(y+11)+'L'+(x+w-8)+' '+(y+36)+'V'+(y+h)+'Z','#18141d',{opacity:'.45'})}
 function candle(x,y){r(x,y,5,12,'#c9b1a0');r(x,y-4,5,4,'#d68556');r(x+1,y-8,3,5,'#ffc586');r(x+2,y-11,1,3,'#fff4ba')}
-function column(x,y,h){r(x,y,12,h,'#403747');r(x+2,y,3,h,'#685667');r(x-4,y-3,20,4,'#6e5a6b');r(x-5,y+h,22,6,'#342939')}
+function column(x,y,h){r(x,y,12,h,'#59635e');r(x+2,y,3,h,'#7e8780');r(x-4,y-3,20,4,'#7c8478');r(x-5,y+h,22,6,'#342939')}
 function vine(x,y,dy){for(let i=0;i<dy;i+=9){l(x+(i%18===0?0:6),y+i,x+4,y+i+10,'#384136',2);r(x+((i*3)%17),y+i,6,3,i%3?'#3f4738':'#713c47')}}
 stone(0,'url(#sky)');circle(658,43,31,'#893e55');circle(661,43,24,'#b35367');circle(654,36,5,'#7f3a50');circle(670,49,6,'#8b4153');
 p('M0 88L140 45L245 95L348 57L492 97L566 47L713 92L824 55L900 88V111H0Z','#202030');p('M0 102L123 69L240 103L347 77L458 109L575 79L724 107L900 88V111H0Z','#2d2b38');
@@ -222,7 +269,7 @@ for(const x of [96,261,366,479,755]){r(x,53,7,51,'#292631');r(x-15,68,36,6,'#292
 for(let j=0;j<50;j++){const x=Math.floor(rnd()*700),y=96+Math.floor(rnd()*12);r(x,y,1+Math.floor(rnd()*5),2,['#5d4146','#4f4a3f','#3b493c'][j%3])}
 p('M0 13L16 20L20 3L26 25L48 0L54 23L72 12L70 0H0Z','#131018');
 stone(112,'url(#ritual)');for(let x=58;x<900;x+=146){arch(x,126,85,108);column(x+3,134,75);column(x+99,134,75)}
-r(247,170,235,38,'#2e2026');r(290,178,145,24,'#352a2b');el('ellipse',{cx:365,cy:188,rx:56,ry:17,fill:'#0e0e15',stroke:'#755a60','stroke-width':4});
+r(247,170,235,38,'#382e2a');r(290,178,145,24,'#352a2b');el('ellipse',{cx:365,cy:188,rx:56,ry:17,fill:'#0e0e15',stroke:'#755a60','stroke-width':4});
 for(let i=0;i<33;i++){const x=318+i*2.5;let yy=176-Math.floor(rnd()*28);r(x,yy,4,192-yy,['#9f3c39','#d66f46','#e99561'][i%3])}
 for(const x of [90,130,204,510,541,604])candle(x,188+(x%2?0:6));for(const x of [20,195,710,800])vine(x,117,85);
 stone(224,'url(#library)');for(let x=37;x<900;x+=180){arch(x,240,87,137,'#1a1520');column(x+5,234,88);column(x+129,234,88);r(x+26,258,90,62,'#251a27');for(let z=0;z<3;z++){r(x+26,274+z*17,90,3,'#60444a');for(let n=0;n<13;n++){r(x+27+n*7,259+z*17,3+(n%3),13,['#554454','#775659','#645d52','#403c56'][n%4])}}}
@@ -231,12 +278,30 @@ stone(336,'url(#observatory)');for(let x=62;x<900;x+=175){arch(x,349,87,139,'#15
 p('M276 432V378L367 353L459 378V432Z','#1c283b',{stroke:'#5a6274','stroke-width':4});for(let i=0;i<44;i++){r(286+Math.floor(rnd()*170),355+Math.floor(rnd()*67),1+(i%3===0?2:0),1+(i%3===0?2:0),i%5===0?'#91aca7':'#d0c6bc')}
 l(320,424,386,383,'#725d64',9);l(340,430,359,405,'#544d58',5);l(365,402,380,429,'#544d58',5);circle(391,385,10,'#b2a38e');circle(389,383,5,'#223b46');for(const x of [80,112,493,541])candle(x,427);
 stone(448,'url(#sanctum)');for(let x=55;x<900;x+=157){arch(x,460,95,115,'#17111d');column(x+2,470,82);column(x+105,470,82)}
-for(const x of [120,168,215,473,536,600]){p('M'+x+' 544L'+(x+13)+' '+(506-(x%28))+'L'+(x+25)+' 544Z',x%3===0?'#845685':'#64435f');l(x+9,540,x+15,518,'#a17a9f',2)}
+for(const x of [120,168,215,473,536,600]){p('M'+x+' 544L'+(x+13)+' '+(506-(x%28))+'L'+(x+25)+' 544Z',x%3===0?'#768c82':'#485b55');l(x+9,540,x+15,518,'#a17a9f',2)}
 r(325,510,167,9,'#6a4f5c');r(350,520,118,20,'#342631');r(359,493,97,15,'#3c2b3a');circle(405,488,19,'#5b505a');circle(405,488,12,'#897183');
 for(const x of [310,321,492,503])candle(x,500);
 for(let i=0;i<19;i++){const x=i*48+6;r(x,555+(i%2),28,4,'#453447')}
-function choose(i){const data=rooms[i];document.querySelectorAll('.room').forEach((b,j)=>b.setAttribute('aria-pressed',j===i?'true':'false'));document.getElementById('status-label').textContent='▸ CHAMBER '+(i+1)+' / 5  ·  '+data.links.length+' DOORS';document.getElementById('status-title').textContent=data.title;document.getElementById('status-desc').textContent=data.desc;const nav=document.getElementById('links');nav.replaceChildren();data.links.forEach(item=>{const a=document.createElement('a');a.href=base+item[1];a.target='_blank';a.rel='noopener noreferrer';a.textContent='⌁ '+item[0];nav.appendChild(a)})}
-document.querySelectorAll('.room').forEach(b=>b.addEventListener('click',()=>choose(Number(b.dataset.index))));
-choose(2);
+
+/* Hand-authored low-resolution relic sprites. A click opens that exact Notion page. */
+const itemKinds=[["herbs","relic","mortar","weather"],["scroll","grimoire","cauldron","flask","candles","elements"],["shelf","openbook","hourglass","statue","quill","key","scales","desk","chest"],["telescope","orb","wheel","hourglass","raven","runes","crystal"],["codex","mirror"]];
+const motifs={"herbs":["....g.g.....","...gGgGg....","..gGGGGGg...","...gGGGg....","..G.GGG.G...","...gGGG.....","....GS......",".....S......",".....S......","....BBB....."],"relic":["...SSSSS....","..SCCCCCS...","..SC.C.CS...","..SCCCCCS..","...SCCCS....","....SSS.....","...SSS....","..BBBBBB...","...BBBBB...."],"mortar":["...C...C....","....C.C.....","..BBBBBBBB..","..BCCCCCCB..","...BCCCCB...","...BBBBBB...","....BBBB....","....BBBB....","...BBBBBB..."],"weather":["...SSSS.....","..SCCCCS....",".SCCCCCCS...","SCCCCCCCCS..","SSSSSSSSSS..","....EE......","...EE.......","....E.......","...EE......."],"scroll":[".CCCCCCCCC..",".CBBBBBBBC..",".CCCCCBBBC..",".CBBBBBBBC..",".CCCCCBBBC..",".CBBBBBBBC..",".CCCCCBBBC..",".CCCCCCCCC..","..BB....BB.."],"grimoire":["..BBBBBBBB..",".BBGGGGGGB..",".BBGCEEGGB..",".BBGEEEEGB..",".BBGCEEGGB..",".BBGGGGGGB..",".BBBBBBBBB..","..BBBBBBBB.."],"cauldron":["..G......G..","...G....G...","..SSSSSSSS..",".SSGGGGGGSS.","SSSGGGGGGSSS","SSSGGGGGGSSS",".SSSSSSSSSS.","..BBB..BBB.."],"flask":["....SSSS....",".....SS.....",".....SS.....","....SSSS....","...SCCCCS...","..SCCGGCCS..","..SCCGGCCS..","..SCCGGCCS..","...SSSSSS..."],"candles":[".E....E.....","EEE..EEE....",".R....R.....",".R....R.....",".R....R.....","SSSSSSSSS...","..CCCCCC....","..CCCCCC...."],"elements":["....E.......","...EEE......","....E.......",".GG.....TT..","GGGG...TTTT.","GGGG...TTTT.",".GG.....TT..","....RR......","...RRRR.....","....RR......"],"shelf":[".BBBBBBBBBB.",".BRSRSGSREB.",".BBBBBBBBBB.",".BGRSRCRSRB.",".BBBBBBBBBB.",".BCRCGGRSRB.",".BBBBBBBBBB."],"openbook":[".SSS....SSS.","SCCCCSSCCCCS","SCCCSSSCCCCS","SCCCSSSCCCCS","SCCCCSSCCCCS",".SSSSSSSSSS.","....BBBB...."],"hourglass":["..SSSSSSS...","..SCCCCCS..","...SCCCS....","....SCS.....",".....S......","....SCS.....","...SCCCS....","..SCCCCCS...","..SSSSSSS..."],"statue":["....SSS.....","...SCCCS....","....CCC.....","...SSSSS....","..SSSSSSS...","..SSSSSSS...","...BBBBB....","..BBBBBBB..."],"quill":["......GG....",".....GGG....","....GGGG....","...GGGG.....","....GG......",".....S......",".....S......","...SSSSSS..."],"key":["..EEEE......",".ECCCCE.....",".ECCCCE.....","..EEEE......","...EE.......","...EEEEE....","...EE..EE...","...EEEEEE..."],"scales":[".....E......","....EEE.....","..EEEEEEE...",".....E......",".S...E...S..","SSS..E..SSS.","SSSS.E.SSSS.","..SS.E.SS...","...SSSSS...."],"desk":["..CC...CC...","..CCCCCCC...","..CBBBBBC...","SSSSSSSSSS..","..BB....BB..","..BB....BB..","..BB....BB.."],"chest":["..BBBBBBBB..",".BBCCCCCCBB.",".BBBBBBBBBB.",".BBBCBBCBB.",".BBBEEEEBBB.",".BBBBBBBBBB.","..BB....BB.."],"telescope":[".....EEEEE..","....ESSSSE..","...ESSSSE...","..ESSSSE....","...EEE......","....S.......","...SSS......","..S...S....."],"orb":["....SSSS....","...SCCCCS...","..SCTTTTCS..","..SCTTTTCS..","...SCCCCS...","....SSSS....",".....BB.....","....BBBB...."],"wheel":["....EE......","..EEEEEE....",".EE....EE...","EE..EE..EE..","EE.E..E.EE..","EE..EE..EE..",".EE....EE...","..EEEEEE....","....EE......"],"raven":["....SSSS....","...SSSSSS...","..SSSSSSSE..","SSSSSSSSSS..","..SSSSSS....","...SSSS.....","....S.S.....","...S...S...."],"runes":["..SSSSSSSS..","..SCCCCCCS..","..SCCSSCCS..","..SCSCSSCS..","..SCCSSCCS..","..SCSCSSCS..","..SCCCCCCS..","..SSSSSSSS.."],"crystal":["...T...T....","..TT..TTT...","..TTTTTTT...","..TTTTTTT...","...TTTTT....","...TTTTT....","....TTT.....","....BBB....."],"codex":[".BBBBBBBBBB.",".BCCCCCCCCC.",".BCCSSSSCCC.",".BCCSEESCCC",".BCCSEESCCC.",".BCCSSSSCCC.",".BCCCCCCCCC.",".BBBBBBBBBB."],"mirror":["...BBBBBB...","..BCCCCCCB..","..BCTTTTCB..","..BCTTTTCB..","..BCTTTTCB..","..BCCCCCCB..","...BBBBBB...","....BBBB....","...BBBBBB..."]};
+const pigments={X:'#141b19',S:'#a1ada8',C:'#e5d9ba',B:'#765746',G:'#87ad70',g:'#52684b',E:'#e3b56a',R:'#a95d51',T:'#79a5aa',P:'#a88bad',D:'#616c68',W:'#e9e8d0'};
+function sprite(kind){const rows=motifs[kind]||motifs.scroll,ns='http://www.w3.org/2000/svg',a=document.createElementNS(ns,'svg');a.setAttribute('viewBox','0 0 12 12');a.setAttribute('aria-hidden','true');for(let y=0;y<rows.length;y++)for(let x=0;x<rows[y].length;x++){const color=pigments[rows[y][x]];if(!color)continue;const q=document.createElementNS(ns,'rect');q.setAttribute('x',x);q.setAttribute('y',y);q.setAttribute('width',1);q.setAttribute('height',1);q.setAttribute('fill',color);a.appendChild(q)}return a}
+const placements=[
+[[24,10],[43,10],[61,10],[78,10]],
+[[21,30],[35,30],[49,30],[63,30],[77,30],[88,30]],
+[[25,45],[40,45],[55,45],[70,45],[85,45],[25,55],[40,55],[55,55],[70,55]],
+[[25,66],[43,66],[61,66],[79,66],[35,74],[53,74],[71,74]],
+[[41,89],[65,89]]
+];
+function paintObjects(){const host=document.getElementById('hotspots');host.replaceChildren();rooms.forEach((room,ri)=>{room.links.forEach((item,i)=>{const a=document.createElement('a');a.className='relic';a.href=base+item[1];a.target='_blank';a.rel='noopener noreferrer';a.setAttribute('aria-label','Open '+item[0]+' in Notion');a.title=item[0];a.dataset.tip=item[0];const pos=placements[ri][i];a.style.left=pos[0]+'%';a.style.top=pos[1]+'%';a.appendChild(sprite(itemKinds[ri][i]));a.addEventListener('mouseenter',()=>selectFloor(ri,false));a.addEventListener('focus',()=>selectFloor(ri,false));host.appendChild(a)})})}
+function selectFloor(i,keepFocus=true){const data=rooms[i];document.getElementById('floor-halo').style.top=i*20+'%';document.getElementById('status-label').textContent='▸ FLOOR '+['I','II','III','IV','V'][i]+' / 5  ·  '+data.links.length+' RELICS';
+document.getElementById('status-title').textContent=data.title;document.getElementById('status-desc').textContent=data.desc;
+document.querySelectorAll('.floor-tabs button').forEach(b=>b.setAttribute('aria-pressed',Number(b.dataset.floor)===i?'true':'false'));
+const nav=document.getElementById('links');nav.replaceChildren();data.links.forEach((item,ii)=>{const a=document.createElement('a');a.href=base+item[1];a.target='_blank';a.rel='noopener noreferrer';a.appendChild(sprite(itemKinds[i][ii]));const name=document.createElement('span');name.textContent=item[0];a.appendChild(name);nav.appendChild(a)});
+}
+document.querySelectorAll('.floor-tabs button').forEach(b=>b.addEventListener('click',()=>selectFloor(Number(b.dataset.floor))));
+paintObjects();selectFloor(1);
 })();
 </script></body></html>
