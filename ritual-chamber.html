@@ -58,6 +58,19 @@ h1{font:normal clamp(20px,4vw,33px)/1.1 Georgia,serif;letter-spacing:1px;margin:
 @media(max-width:620px){main{padding:6px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.door{font-size:11px}.dialogue{max-width:65%;right:6%;bottom:14%}.hotspot::after{display:none}.leaf{width:5px;height:3px}}
 @media(prefers-reduced-motion:reduce){.stage-fx *,.sleep,.halo-light{animation:none!important}.sleep{opacity:.75}}
 .door[hidden]{display:none!important}
+
+/* Mobile stability: preserve the artwork while avoiding blend/blur-heavy layers, viewport jumps and iOS input zoom. */
+@media(max-width:620px){
+.scene{contain:layout paint;transform:translateZ(0)}
+.stage-fx{contain:paint}
+.ritual-light,.fire-light,.candle-light,.halo-light{mix-blend-mode:normal}
+.wisp{filter:none;opacity:.12}
+.wisp.second,.leaf.l3,.spark.s3{display:none}
+.dialogue{position:relative;right:auto;bottom:auto;max-width:100%;width:100%;margin:0 0 12px;box-shadow:none;padding:10px 12px;font-size:13px}
+.familiar-search input{font-size:16px;min-height:44px}
+.door{min-height:48px}
+}
+
 </style>
 </head>
 <body>
@@ -91,11 +104,14 @@ const a=document.createElement('a');a.className='door';a.href=BASE+s.id;a.target
 if(s.hotspot){const b=document.createElement('a');b.className='hotspot';b.href=a.href;b.target=a.target;b.rel=a.rel;b.dataset.label=s.name;b.setAttribute('aria-label','Open '+s.name+' in Notion');b.style.left=s.hotspot[0]+'%';b.style.top=s.hotspot[1]+'%';b.style.width=s.hotspot[2]+'%';b.style.height=s.hotspot[3]+'%';hotspots.appendChild(b)}
 });
 const box=document.getElementById('familiar-search'),dialogue=document.getElementById('dialogue'),search=document.getElementById('search'),out=document.getElementById('search-help');
+/* On compact screens dialogue belongs below the illustration, not over Ochacha. */
+if(window.matchMedia('(max-width:620px)').matches){document.querySelector('.panel').prepend(dialogue)}
 document.getElementById('ochacha').addEventListener('click',()=>{
 const open=box.hidden;box.hidden=!open;dialogue.hidden=!open;if(!open)return;
 const day=Number(new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',day:'numeric'}).format(new Date()));
 dialogue.textContent=day===1?'A new moon of work begins, Witch. Remember your monthly Codex review.':'A little nap, a little magic. What shall we study today?';
-search.value='';out.textContent='Searches section titles only; this is not full-text Notion search.';search.focus({preventScroll:true});
+search.value='';out.textContent='Searches section titles only; this is not full-text Notion search.';
+if(window.matchMedia('(hover: hover) and (pointer: fine)').matches){search.focus({preventScroll:true});}
 });
 search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();doors.querySelectorAll('a').forEach((a,i)=>{a.hidden=!!q&&!a.textContent.toLowerCase().includes(q)});out.textContent=q?'Matching sections are shown above.':'Searches section titles only.'});
 })();
