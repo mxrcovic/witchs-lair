@@ -37,6 +37,7 @@ h1{font:normal clamp(20px,4vw,33px)/1.1 Georgia,serif;letter-spacing:1px;margin:
 .sleep{position:absolute;left:70%;top:65%;z-index:3;color:#f5e9db;font:700 clamp(9px,2vw,20px) monospace;letter-spacing:2px;transform:rotate(-12deg);opacity:0;animation:zzz 3.4s ease-in-out infinite;pointer-events:none;text-shadow:0 0 5px #704a67}
 .halo-light{position:absolute;left:66.7%;top:66.1%;width:6%;height:4%;border-radius:50%;background:radial-gradient(ellipse,#ffdf9161,transparent 72%);animation:breathe 3.2s ease-in-out infinite}
 .dialogue{position:absolute;z-index:8;right:13%;bottom:16%;max-width:35%;padding:10px 12px;color:#f5e5ce;background:#1c161eea;border:1px solid #b69378;font:italic clamp(11px,1.45vw,16px)/1.4 Georgia,serif;box-shadow:3px 4px #131018}
+.scene > .dialogue{right:auto;bottom:auto;max-width:min(35%,290px);width:max-content}
 .dialogue[hidden]{display:none}
 .panel{padding:15px;background:linear-gradient(#201b23,#15141a);border-top:1px solid #6d575d}
 .section-title{font:11px/1.4 monospace;letter-spacing:1.3px;color:#c8b09d;margin:0 0 11px}
@@ -121,6 +122,7 @@ document.getElementById('ochacha').setAttribute('aria-expanded',String(open));
 if(!open)return;
 const day=Number(new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',day:'numeric'}).format(new Date()));
 dialogue.textContent=day===1?'A new moon of work begins, Witch. Remember your monthly Codex review.':'A little nap, a little magic. What shall we study today?';
+// The next familiar animation frame positions this bubble beside Ochacha.
 search.value='';out.textContent='Searches section titles only; this is not full-text Notion search.';if(window.matchMedia('(hover:hover) and (pointer:fine)').matches)search.focus({preventScroll:true});
 });
 search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();doors.querySelectorAll('a').forEach((a,i)=>{a.hidden=!!q&&!a.textContent.toLowerCase().includes(q)});out.textContent=q?'Matching sections are shown above.':'Searches section titles only.'});
@@ -371,6 +373,27 @@ function drawFacingSprite(img,x,y,w,h,facing,cx){
  familiarCtx.drawImage(img,Math.round(x),Math.round(y),w,h);
  familiarCtx.restore();
 }
+/* Keep Ochacha's speech balloon next to HIM, not anchored to the cushion.
+   On mobile the dialogue stays in the panel below the artwork as before.
+   Clamp to scene bounds, including when he's close to the left/right edge. */
+function updateOchachaDialogue(x,top,w){
+ const dialogue=document.getElementById('dialogue');
+ const scene=document.getElementById('scene');
+ if(!dialogue||dialogue.hidden||dialogue.parentElement!==scene)return;
+ const sceneWidth=scene.clientWidth,sceneHeight=scene.clientHeight;
+ if(!sceneWidth||!sceneHeight)return;
+ const bubbleWidth=dialogue.offsetWidth,bubbleHeight=dialogue.offsetHeight;
+ const headX=(x+w*.37)/1672*sceneWidth;
+ const headY=top/941*sceneHeight;
+ const left=Math.max(8,Math.min(sceneWidth-bubbleWidth-8,headX));
+ const above=headY-bubbleHeight-9;
+ const y=above>=8?above:Math.min(sceneHeight-bubbleHeight-8,headY+14);
+ dialogue.style.left=Math.round(left)+'px';
+ dialogue.style.top=Math.max(8,Math.round(y))+'px';
+ dialogue.style.right='auto';
+ dialogue.style.bottom='auto';
+}
+
 function drawFamiliar(timeMs){
  if(!familiarReady)return;
  familiarCtx.clearRect(0,0,1672,941);
@@ -409,7 +432,9 @@ function drawFamiliar(timeMs){
  familiarButton.style.top=(top/941*100)+'%';
  familiarButton.style.width=(w/1672*100)+'%';
  familiarButton.style.height=(h/941*100)+'%';
- familiarButton.style.pointerEvents=stage.stage==='hopToBook'||stage.stage==='hopBack'?'none':'auto';
+ // The familiar's hitbox follows him at EVERY stage, including airborne hops.
+ familiarButton.style.pointerEvents='auto';
+ updateOchachaDialogue(x,top,w);
 }
 function familiarTick(now){
  if(!familiarReady||document.hidden){familiarRunning=false;return}
