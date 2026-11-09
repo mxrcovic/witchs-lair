@@ -107,7 +107,20 @@ html.notion-embed .frame{border:0;box-shadow:none}
 /* Horizontal panoramic rendering: keep full width and the entire picture,
    but compress scene HEIGHT to 50% in the Notion embed only.
    Background, canvas layers and hitboxes all share the same coordinate plane. */
-html.notion-embed .scene{aspect-ratio:1672/470.5}
+/* PANORAMIC RECOMPOSITION: the image stays at its original undistorted aspect.
+   The central altar is framed at full width within a half-height window.
+   Every visual layer, including overlays and hotspots, keeps the same coordinates. */
+html.notion-embed .scene{aspect-ratio:1672/470.5;overflow:hidden}
+html.notion-embed .scene > .art,
+html.notion-embed .scene > .cushion-polish,
+html.notion-embed .scene > .stage-fx,
+html.notion-embed .scene > .fx-canvas,
+html.notion-embed .scene > .familiar-canvas,
+html.notion-embed .scene > .hotspots{
+ position:absolute;left:0;top:-68.0128%;
+ width:100%;height:200%!important
+}
+html.notion-embed .scene > .art{object-fit:fill}
 html.notion-embed .panel{padding:7px}
 html.notion-embed .section-title,html.notion-embed .optional{display:none}
 html.notion-embed .grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
@@ -523,9 +536,13 @@ function drawFamiliar(timeMs){
  }
  // The invisible click region follows the sprite but never changes its state.
  familiarButton.style.left=((x-w/2)/1672*100)+'%';
- familiarButton.style.top=(top/941*100)+'%';
+ // Translate the moving hitbox into the same panoramic viewport coordinates.
+ const panorama=document.documentElement.classList.contains('notion-embed');
+ const viewportTop=panorama?320:0;
+ const viewportHeight=panorama?470.5:941;
+ familiarButton.style.top=((top-viewportTop)/viewportHeight*100)+'%';
  familiarButton.style.width=(w/1672*100)+'%';
- familiarButton.style.height=(h/941*100)+'%';
+ familiarButton.style.height=(h/viewportHeight*100)+'%';
  // The familiar's hitbox follows him at EVERY stage, including airborne hops.
  familiarButton.style.pointerEvents='auto';
 }
