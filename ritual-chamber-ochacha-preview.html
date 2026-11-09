@@ -324,6 +324,7 @@ const STAGES=[
 let cycleLength=0;
 for(const stage of STAGES){stage.start=cycleLength;cycleLength+=stage.ms}
 let familiarStart=0,familiarLast=0,familiarRunning=false,familiarReady=false,hiddenAt=null;
+let userPausedAt=null;
 const clamp01=v=>Math.max(0,Math.min(1,v));
 function segmentHop(stage,within){
  const points=stage==='hopBack'?ROUTE.slice().reverse():ROUTE;
@@ -412,6 +413,13 @@ function drawFamiliar(timeMs){
 }
 function familiarTick(now){
  if(!familiarReady||document.hidden){familiarRunning=false;return}
+ const toggle=document.getElementById('fx-switch');
+ if(toggle&&toggle.getAttribute('aria-pressed')==='false'){
+   if(userPausedAt===null)userPausedAt=now;
+   requestAnimationFrame(familiarTick);
+   return;
+ }
+ if(userPausedAt!==null){familiarStart+=now-userPausedAt;userPausedAt=null}
  if(now-familiarLast>55){familiarLast=now;drawFamiliar(now)}
  requestAnimationFrame(familiarTick);
 }
@@ -429,7 +437,7 @@ if(window.matchMedia('(max-width:620px)').matches){
  document.querySelector('.panel').prepend(document.getElementById('dialogue'));
 }
 document.addEventListener('visibilitychange',()=>{
- if(document.hidden){hiddenAt=performance.now();familiarRunning=false}
+ if(document.hidden){hiddenAt=performance.now();userPausedAt=null;familiarRunning=false}
  else{
    if(hiddenAt!==null){familiarStart+=performance.now()-hiddenAt;hiddenAt=null}
    startFamiliar();
