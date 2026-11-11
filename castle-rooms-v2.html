@@ -1,0 +1,128 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#171619"><meta name="description" content="The Witch's Lair — first interactive draft of five pixel-art castle rooms and their Notion archives."><title>The Witch's Lair · Five Chambers · Pixel Art Draft II</title><style>
+:root{color-scheme:dark;--ink:#e8d8c1;--muted:#a99e90;--gold:#d4af7e;--edge:#655a58;--stone:#22262a;--bg:#121417}
+*{box-sizing:border-box}html,body{margin:0;background:#101215;color:var(--ink)}body{font-family:Georgia,'Times New Roman',serif}
+.shell{max-width:1160px;margin:0 auto;padding:16px 18px 32px}.mast{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid #665950;padding:0 0 13px}
+.eyebrow{font:10px/1.5 monospace;letter-spacing:2px;color:#bd9f7b}.mast h1{font-size:clamp(21px,3vw,33px);margin:4px 0 0;font-weight:400;letter-spacing:1px}
+.exit{color:#e5c79e;text-decoration:none;border:1px solid #74604c;background:#252123;font:11px monospace;padding:10px 12px}.exit:hover,.exit:focus-visible{background:#49382e}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:17px 0 12px}.tab{appearance:none;border:1px solid #5a5250;background:#242528;color:#c9bcaa;padding:12px 8px;cursor:pointer;text-align:center;font:700 11px/1.4 monospace;letter-spacing:.4px}.tab .num{display:block;color:#d4a977;font:bold 20px Georgia;margin-bottom:2px}
+.tab[aria-selected=true]{border-color:#d6b17e;background:#423a34;color:#fff1d8;box-shadow:inset 0 0 0 1px #8f7859}.tab:hover,.tab:focus-visible{border-color:#cfb18e;outline:0}
+.caption{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap;margin:7px 0 12px}.caption h2{font-size:clamp(18px,2.8vw,26px);font-weight:400;margin:0}.caption p{font:12px/1.5 monospace;color:#b3aa9f;margin:3px 0}.rune{color:#d2a976;font:12px monospace}
+.stage{position:relative;isolation:isolate;border:3px solid #655a55;outline:1px solid #393838;background:#101219;aspect-ratio:3/1;overflow:hidden}.stage svg,.stage iframe{width:100%;height:100%;display:block;position:absolute;inset:0}.stage svg{image-rendering:pixelated;shape-rendering:crispEdges}.stage iframe{border:0;background:#17131b}.stage:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,#0000 0px 5px,#00000013 6px 6px)}
+.relic{position:absolute;display:grid;place-items:center;transform:translate(-50%,-50%);width:38px;height:40px;z-index:6;text-decoration:none;color:#f3d9ab;background:#111719a8;border:1px solid #aa9c7959;box-shadow:0 2px 4px #0b0d0a;font:bold 19px monospace;outline-offset:2px}.relic:focus-visible,.relic:hover{border-color:#ffdb9b;background:#39322b;box-shadow:0 0 12px #cea36a6c}.relic .tip{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 7px);min-width:max-content;padding:6px 9px;border:1px solid #ab896a;background:#19191add;color:#fce8c5;opacity:0;visibility:hidden;font:10px monospace}.relic:hover .tip,.relic:focus-visible .tip{opacity:1;visibility:visible}
+.stage.ritual .relic{display:none}.ritual-hint{display:none}.stage.ritual .ritual-hint{display:block;position:absolute;z-index:9;left:50%;bottom:8px;transform:translateX(-50%);font:11px monospace;padding:7px 10px;background:#1b141ecf;border:1px solid #74615f;color:#f5dfc2}
+.after{font:11px/1.6 monospace;color:#a99c93;margin:10px 0 8px}.index{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:0;margin:0;list-style:none}.index a{display:flex;align-items:center;gap:7px;min-height:46px;border:1px solid #655b55;padding:8px;color:#e4cfb2;background:#212326;text-decoration:none;font:12px/1.3 monospace}.index a:hover,.index a:focus-visible{border-color:#d5a973;background:#3c3832}.index i{font-style:normal;color:#dfb576}
+.note{margin-top:18px;border-top:1px dashed #685e54;padding-top:10px;font:11px/1.6 monospace;color:#9d9b94}.note a{color:#dcb887}
+@media(max-width:700px){.shell{padding:10px 9px 22px}.tabs{gap:3px}.tab{font-size:8px;padding:9px 3px}.tab .num{font-size:16px}.stage{aspect-ratio:2.1/1}.index{grid-template-columns:repeat(2,minmax(0,1fr))}.index a{font-size:10px;min-height:50px}.relic{width:27px;height:30px;font-size:14px}.relic .tip{display:none}.stage.ritual iframe{object-fit:cover}.ritual-hint{white-space:nowrap;font-size:9px!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+body[data-room="0"]{--accent:#94ad9b;--soft:#30443d}
+body[data-room="1"]{--accent:#b5bb86;--soft:#3c4232}
+body[data-room="2"]{--accent:#c4a277;--soft:#48372e}
+body[data-room="3"]{--accent:#9aaecd;--soft:#2c394c}
+body[data-room="4"]{--accent:#b7a0be;--soft:#40344a}
+body[data-room] .stage{border-color:var(--accent)}
+body[data-room] .tab[aria-selected=true]{border-color:var(--accent);background:var(--soft);color:#f4e8dc}
+body[data-room] .caption h2{color:var(--accent)}
+.mist-shift{animation:mistDrift 13s ease-in-out infinite alternate}
+.moon-pulse{animation:moonGlow 5s ease-in-out infinite alternate}
+.mirror-glimmer{animation:mirrorShift 6s ease-in-out infinite alternate}
+@keyframes mistDrift{from{opacity:.24;transform:translateX(-16px)}to{opacity:.6;transform:translateX(24px)}}
+@keyframes moonGlow{from{opacity:.7}to{opacity:1}}
+@keyframes mirrorShift{from{opacity:.23;transform:translateX(-6px)}to{opacity:.72;transform:translateX(8px)}}
+@media(prefers-reduced-motion:reduce){.mist-shift,.moon-pulse,.mirror-glimmer{animation:none}}
+</style></head><body><main class="shell"><header class="mast"><div><div class="eyebrow">THE WITCH'S LAIR / FIVE CHAMBERS / PIXEL ART DRAFT II</div><h1>✦ THE CASTLE'S INNER ROOMS ✦</h1></div><a class="exit" href="castle.html">← THE CASTLE ATLAS</a></header><nav class="tabs" aria-label="Choose one of five castle floors"><button class="tab" data-i="0" aria-selected="false"><span class="num">I</span>GROUNDS</button><button class="tab" data-i="1" aria-selected="true"><span class="num">II</span>RITUALS</button><button class="tab" data-i="2" aria-selected="false"><span class="num">III</span>LIBRARY</button><button class="tab" data-i="3" aria-selected="false"><span class="num">IV</span>STARS</button><button class="tab" data-i="4" aria-selected="false"><span class="num">V</span>SANCTUM</button></nav><section class="caption"><div><div class="eyebrow">FLOOR <span id="floor">II</span> / 5</div><h2 id="headline">✦ The Ritual Chamber</h2><p id="blurb">Click the objects, then open their corresponding Notion records.</p></div><div class="rune" id="count">5 INDEXED RELICS</div></section><div id="stage" class="stage" role="region" aria-label="Interactive pixel art chamber"></div><p class="after">▸ EXPLORE THE OBJECTS ABOVE, OR OPEN AN ARCHIVE FROM THE INDEX BELOW. THE RITUAL CHAMBER IS THE PRESERVED EXISTING PANORAMA.</p><ul id="index" class="index" aria-label="Current room links"></ul><footer class="note">✦ STRUCTURE PROTOTYPE — The Grounds, Library and Sanctum use the new pixel-art palette, while the Observatory and approved Ritual Chamber remain unchanged. Floor II loads the existing Ritual Chamber preview without editing its design. <a href="castle.html">Return to castle atlas</a>.</footer></main><script>
+'use strict';
+const N='http://www.w3.org/2000/svg',BASE='https://app.notion.com/p/',R=[{"n":"I","name":"The Haunted Grounds","short":"THE GROUNDS","desc":"An autumn garden of herbs, rain-worn stone, roots and curios.","items":[["The Apothecary & Greenhouse","5c7272a2250d825ea38b01c1eeed053c","herb",22,57],["Curio Cabinet","eb3272a2250d820282db01c446597142","chest",47,59],["Crystals & Stones","f02272a2250d82228a0d814a5a829b41","crystal",72,61],["Recipes & Preparations","f0a272a2250d826c856b01d427dbe559","bottle",88,73]]},{"n":"II","name":"The Ritual Chamber","short":"THE RITUALS","desc":"The consecrated chamber, cauldron smoke and familiar footsteps.","items":[["The Arcane Arts","148272a2250d82ca8f0a81e20eb10720","scroll",20,40],["The Grammar of Magick","415272a2250d812c8e19e1cbbc94b352","scroll",54,43],["Spell Book","430272a2250d82a198840173869101ed","book",34,76],["Correspondences","07f272a2250d8357bda1013f3664d285","rune",60,75],["Elements","000272a2250d8307a66981085e077978","orb",76,42],["Sigilcraft","6f4272a2250d83fdaacd818d5f08d482","sigil",87,70]]},{"n":"III","name":"The Forbidden Library","short":"THE LIBRARY","desc":"A library of occult histories, living words and unfinished questions.","items":[["The Council's Library","3da272a2250d822894c7812f00065187","book",14,58],["Lexicon","61f272a2250d837cb01b01d429c1e6df","scroll",27,70],["History & Traditions","560272a2250d82438ef98175f5184c7e","hourglass",43,59],["Mythologies & Deities","233272a2250d830b8b0001b79df23189","statue",56,73],["Philosophy & Paths","e1a272a2250d83109d4a016fc462177e","orb",69,58],["Ethics & Discernment","254272a2250d82c8a28181ca2be73674","scales",85,70],["Studies & Research","af0272a2250d83e692c301d53418338f","quill",37,83],["The Witch\u2019s Marginalia","415272a2250d81f68539cdbaf22d8a30","marginalia",55,85],["Research Inbox","eb2272a2250d8256beaa018a619312ee","chest",77,84]]},{"n":"IV","name":"The Arcane Observatory","short":"THE STARS","desc":"Moonlight, planetary signs, omens and the turning year.","items":[["Astrology & Planetary Magick","456272a2250d838fbce50183b2ee0135","star",14,60],["Divination","fec272a2250d82cc917b81ade820e0f8","crystal",30,80],["Wheel of the Year","1f3272a2250d831f9bd3013a86567d7b","wheel",47,60],["Magical Timing","c81272a2250d8320be1981756834454b","hourglass",65,79],["Omens & Superstitions","032272a2250d8255b24c81ddf5614400","raven",79,53],["Alphabets, Symbols & Sigils","af1272a2250d82d0a1f98175e5ff214d","rune",90,80]]},{"n":"V","name":"The Inner Sanctum","short":"THE SANCTUM","desc":"The Architect's private chronicle, mirrors and the living Codex.","items":[["The Codex of Marcovich","fea272a2250d83c38939019cd37226e6","codex",36,65],["Book of Mirrors","254272a2250d824cbb3f81fb0d04581a","mirror",65,65]]}];
+const icon={herb:'❧',chest:'▣',crystal:'◇',bottle:'♧',scroll:'▤',book:'▥',rune:'ᛟ',orb:'◉',sigil:'✦',hourglass:'⌛',statue:'♙',scales:'⚖',quill:'✎',marginalia:'✒',star:'✧',wheel:'✺',raven:'♠',codex:'▥',mirror:'◈'};
+const el=(t,a={})=>{const e=document.createElementNS(N,t);for(const [k,v] of Object.entries(a))e.setAttribute(k,v);return e};
+const add=(s,t,a)=>{let e=el(t,a);s.appendChild(e);return e};
+const rect=(s,x,y,w,h,fill)=>add(s,'rect',{x,y,width:w,height:h,fill});
+const path=(s,d,fill,stroke='none',sw=1)=>add(s,'path',{d,fill,stroke,'stroke-width':sw});
+const line=(s,x,y,X,Y,color,width=2)=>add(s,'line',{x1:x,y1:y,x2:X,y2:Y,stroke:color,'stroke-width':width});
+function candle(s,x,y,h=25){rect(s,x,y-h,7,h,'#aa9b8c');rect(s,x+1,y-h+2,4,h-4,'#ddd0a8');rect(s,x-2,y,11,4,'#76614e');path(s,`M${x+3} ${y-h-3}q-9 -11 0 -16 q6 8 0 16`,'#eda35d');rect(s,x+2,y-h-6,3,5,'#ffe7a9')}
+function bricks(s,from=52,to=286,color='#3b3d42'){rect(s,0,from,960,to-from,color);let seed=31;for(let y=from+12;y<to;y+=28){for(let x=(y%56?0:-34);x<960;x+=76){let z=(x*3+y*7)%19;rect(s,x+2,y,72,2,z<5?'#47464a':'#2e3036');rect(s,x+2,y,2,27,'#26282d');}}rect(s,0,to-16,960,16,'#262326');rect(s,0,to-18,960,3,'#5f5550');}
+function windowGothic(s,x,y,w,h,glow){rect(s,x-8,y-8,w+16,h+12,'#17191e');path(s,`M${x} ${y+h}V${y+24}Q${x+w/2} ${y-31} ${x+w} ${y+24}V${y+h}Z`,glow,'#888075',7);line(s,x+w/2,y,x+w/2,y+h,'#545057',5);line(s,x,y+47,x+w,y+47,'#545057',4)}
+function stars(s,n=65){for(let i=0;i<n;i++){let x=(i*233+37)%960,y=(i*107+13)%154;rect(s,x,y,i%13===0?3:1,i%13===0?3:1,i%4===0?'#dfd9c5':'#9eafb5')}}
+function shelf(s,x,y,w){rect(s,x,y,w,145,'#5b4333');rect(s,x+7,y+7,w-14,129,'#211d22');for(let j=0;j<3;j++){let yy=y+11+43*j;for(let k=0;k<Math.floor((w-22)/11);k++){let xx=x+11+k*11;rect(s,xx,yy,7,29,(k+j)%5===0?'#765f70':(k*7+j)%3===0?'#8d7161':'#626c61');rect(s,xx,yy+2,7,2,'#b8a18b')}rect(s,x+6,yy+31,w-12,6,'#684d39')}}
+
+function p(s,x,y,w,h,c){return rect(s,Math.round(x),Math.round(y),Math.round(w),Math.round(h),c)}
+function pg(s,points,c){return add(s,'polygon',{points,fill:c})}
+function g(s,cls){const e=add(s,'g',{});if(cls)e.setAttribute('class',cls);return e}
+function stonePavement(s,y,color,edge){p(s,0,y,960,320-y,color);for(let row=0;row<5;row++){let Y=y+row*14;for(let x=-22+(row%2)*41;x<960;x+=82){p(s,x,Y,80,2,edge);p(s,x+80,Y,2,14,edge)}}}
+function plant(s,x,y,leaf='#6e8a70'){p(s,x-12,y-4,24,12,'#856e5a');p(s,x-9,y+7,18,8,'#493f40');p(s,x-2,y-28,4,27,'#536d59');for(let i=0;i<6;i++)p(s,x-17+i*7,y-29+(i%3)*6,13,5,i%2?leaf:'#9ba27d')}
+function flask(s,x,y,liquid){p(s,x+7,y-5,9,8,'#ad9d85');p(s,x+3,y+3,17,18,'#8dada9');p(s,x,y+8,24,20,'#6b8688');p(s,x+4,y+13,16,12,liquid);p(s,x+7,y+6,4,10,'#c3d4c2')}
+function arch(s,x,y,w,h,edge,glass){p(s,x,y+32,w,h-32,edge);pg(s,(x)+','+(y+32)+' '+(x+w/2)+','+(y-10)+' '+(x+w)+','+(y+32),edge);p(s,x+10,y+35,w-20,h-45,glass);pg(s,(x+10)+','+(y+35)+' '+(x+w/2)+','+(y+10)+' '+(x+w-10)+','+(y+35),glass)}
+function wall(s,c,grout){p(s,0,0,960,307,c);for(let j=0;j<13;j++){let Y=j*23;for(let x=-34+(j%2)*41;x<960;x+=82){p(s,x,Y,78,2,grout);p(s,x+78,Y,2,21,grout)}}}
+function ivy(s,x,y){p(s,x,y,4,95,'#4d6253');for(let i=0;i<8;i++){p(s,x-17+(i%2)*13,y+i*11,20,5,'#6e7d5b');p(s,x-12+(i%2)*15,y+i*11-3,10,3,'#8b966e')}}
+
+function crypt(s){
+p(s,0,0,960,320,'#152930');p(s,0,120,960,84,'#2d3e42');for(let i=0;i<55;i++){let x=(i*167+29)%960,y=(i*41+11)%170;p(s,x,y,i%8===0?3:2,2,i%3===0?'#aab5b5':'#576e71')}
+let moon=g(s,'moon-pulse');p(moon,770,28,62,58,'#c7cbb9');p(moon,778,20,46,75,'#d8dbc7');p(moon,790,31,25,42,'#f0ead4');
+for(let k=0;k<20;k++){let x=(k*97+5)%960,y=50+(k*23)%112;p(s,x,y,49+(k%4)*12,4,k%3?'#293f45':'#354a50')}
+for(let x=0;x<960;x+=18){let h=28+(x*7%39);p(s,x,198-h,17,h,x%3?'#1d3031':'#253738')}
+p(s,0,201,960,119,'#33443f');for(let i=0;i<48;i++){let x=(i*79)%960,y=214+(i*37)%97;p(s,x,y,17,4,i%4===0?'#705451':'#4e6058')}
+for(let x=0;x<960;x+=57){p(s,x,181,48,21,'#5b6861');p(s,x+6,170,35,13,'#6b766d');p(s,x+16,157,14,14,'#79837a')}
+// Greenhouse in mist, with pale sage plants and a slanting copper roof.
+p(s,18,143,260,112,'#263f3f');pg(s,'18,143 147,65 279,143','#64786d');pg(s,'41,144 148,85 256,144','#224040');p(s,31,145,238,95,'#2d4948');
+for(let x=49;x<259;x+=37)p(s,x,111+Math.abs(148-x)*.48,4,128,'#91a399');for(let y of [166,203,237])p(s,31,y,236,4,'#81958b');
+p(s,148,71,7,173,'#a1a999');p(s,22,242,250,14,'#5b6960');for(let x=54;x<248;x+=39)plant(s,x,218,x%3===0?'#909d69':'#607e69');
+// Central moonlit cemetery gate with a descending crypt stair.
+p(s,315,136,311,148,'#58645f');pg(s,'315,137 466,40 626,137','#66716a');p(s,329,136,282,133,'#6b766c');arch(s,374,116,182,149,'#9da69a','#17292e');p(s,396,165,136,96,'#243638');p(s,443,203,50,56,'#10191d');
+for(let x=318;x<615;x+=45)p(s,x,143,9,103,'#52605a');p(s,329,275,279,11,'#505a54');p(s,308,288,321,13,'#3a4845');p(s,283,302,369,15,'#273737');
+for(let x of [355,566]){p(s,x,181,22,37,'#2b3636');p(s,x+5,187,12,22,'#c3ad7f');p(s,x+8,194,6,8,'#fce0a0')}
+// Autumn tree over a cabinet of curiosities and mineral clusters.
+p(s,777,124,20,143,'#293331');p(s,784,109,8,90,'#4c4943');for(let i=0;i<25;i++){let x=705+(i*43)%183,y=91+(i*19)%86;p(s,x,y,22+(i%3)*7,10+(i%2)*6,i%4===0?'#ad6c53':i%3===0?'#713b41':'#884b49')}
+p(s,679,228,104,68,'#463f3f');p(s,685,232,92,57,'#755b50');for(let j=0;j<3;j++){p(s,691,239+j*16,81,13,'#4d4140');p(s,726,243+j*16,10,4,'#b39973')}
+for(let i=0;i<5;i++){let x=805+i*23,y=245+(i%2)*8;pg(s,x+','+(y+23)+' '+(x+11)+','+(y-10)+' '+(x+21)+','+(y+23),i%2?'#7e9fa0':'#b1bdad')}
+p(s,832,291,117,7,'#716956');for(let i=0;i<4;i++)flask(s,841+i*28,256,['#884f4f','#6b946c','#887396'][i%3]);
+let fog=g(s,'mist-shift');for(let i=0;i<9;i++){let x=(i*121)%960,y=270+(i%4)*11;p(fog,x,y,96+(i%3)*30,5,i%2?'#748079':'#667872')}
+for(let i=0;i<22;i++){let x=(i*109+81)%960,y=(i*37+36)%286;p(s,x,y,5,3,i%3?'#784547':'#bb6d4d')}candle(s,636,291,20);candle(s,647,291,14);p(s,0,315,960,5,'#1b292b');
+}
+
+
+function library(s){
+wall(s,'#343138','#24262d');p(s,0,0,960,23,'#674f43');p(s,0,22,960,5,'#a77f5a');
+arch(s,348,43,265,218,'#796c60','#1e3544');arch(s,365,58,231,197,'#66636b','#2b4758');
+for(let i=0;i<9;i++){let x=379+i*24;p(s,x,95+(i%3)*6,17,119-(i%3)*6,i%3===0?'#3c6370':'#345062')}p(s,476,72,7,174,'#a88d72');p(s,384,153,204,5,'#a88d72');
+for(let i=0;i<35;i++){let x=382+(i*43)%200,y=67+(i*23)%129;p(s,x,y,3,3,i%3?'#b5bdba':'#789aab')}
+for(let x of [7,266,679,933]){p(s,x,22,18,266,'#575059');p(s,x+6,22,5,264,'#98765f');p(s,x-6,287,38,11,'#6b5150')}
+for(let x of [41,192,625,779]){p(s,x,58,134,173,'#74533d');p(s,x+5,70,124,148,'#28262b');for(let j=0;j<3;j++){let Y=80+j*43;for(let k=0;k<10;k++){let xx=x+10+k*11;p(s,xx,Y,8,28,(j+k)%4===0?'#775e70':k%3===0?'#567170':'#92745a');p(s,xx+2,Y+3,4,2,'#c6a680')}p(s,x+5,Y+31,124,6,'#a97e51')}p(s,x-4,54,143,8,'#b18d67');p(s,x-3,219,141,12,'#564239')}
+line(s,51,244,108,76,'#a78561',7);line(s,87,244,145,76,'#a78561',7);for(let i=0;i<8;i++){let Y=103+i*17;line(s,104-i*7,Y,133-i*7,Y,'#c5a276',5)}
+p(s,275,231,417,18,'#6b4d3c');p(s,290,224,389,10,'#b68b63');p(s,304,249,23,66,'#4a3532');p(s,650,249,24,66,'#4a3532');
+// Open illuminated folio on the reading table.
+pg(s,'410,223 477,205 510,221 547,204 601,222 546,239 504,230 458,240','#d1b68e');
+pg(s,'414,223 476,212 503,225 462,235','#ead8b4');pg(s,'514,223 546,210 594,222 545,233','#ebd3aa');
+p(s,502,214,5,20,'#7f664e');for(let i=0;i<6;i++){p(s,431+i*8,224+i%2*2,5,2,'#b39d83');p(s,531+i*8,223+i%2,5,2,'#b39d83')}
+p(s,358,209,37,16,'#545a5f');p(s,362,205,28,5,'#9f8c7b');p(s,374,219,12,10,'#20252a');line(s,385,210,401,184,'#c4af8d',3);candle(s,336,232,23);candle(s,630,232,30);candle(s,659,232,23);flask(s,610,198,'#578a77');
+stonePavement(s,295,'#28282d','#39353b');p(s,0,301,960,4,'#8f775e');
+}
+
+function obs(s){rect(s,0,0,960,320,'#1a2638');stars(s,128);path(s,'M0 95 Q480 -115 960 95 V121 H0Z','#354151');rect(s,0,228,960,92,'#363842');for(let x=0;x<960;x+=70)rect(s,x,227,68,7,'#6a6770');windowGothic(s,334,22,288,187,'#203a51');rect(s,445,69,64,64,'#c6c0a5');rect(s,455,75,49,51,'#e0d5b5');for(let i=0;i<38;i++){let x=365+(i*41)%220,y=29+(i*29)%155;rect(s,x,y,2,2,'#cad4da')}
+line(s,246,224,359,150,'#c9ad7f',18);line(s,254,225,359,155,'#695e63',7);line(s,290,201,267,258,'#aa8867',5);line(s,290,201,318,258,'#aa8867',5);
+add(s,'circle',{cx:730,cy:194,r:58,fill:'none',stroke:'#b7a47f','stroke-width':8});add(s,'circle',{cx:730,cy:194,r:33,fill:'none',stroke:'#947d63','stroke-width':4});add(s,'ellipse',{cx:730,cy:194,rx:60,ry:20,fill:'none',stroke:'#d2b37e','stroke-width':7});line(s,730,132,730,258,'#93826e',5);rect(s,702,256,56,8,'#79614e');candle(s,854,267,29);rect(s,0,305,960,15,'#23252b')}
+
+function sanctum(s){
+wall(s,'#282631','#201f2a');for(let x of [12,243,476,706,928]){p(s,x,0,19,294,'#4d4153');p(s,x+8,0,5,284,'#8a7183')}
+for(let x of [102,795]){p(s,x,14,74,112,'#3e2d48');p(s,x+8,22,58,110,'#60435d');pg(s,(x+8)+',132 '+(x+37)+',153 '+(x+66)+',132','#60435d');p(s,x+29,52,16,34,'#b3a0b2')}
+arch(s,378,44,208,210,'#817383','#202737');arch(s,393,57,175,191,'#5c5669','#334454');
+for(let i=0;i<42;i++){let x=403+(i*29)%151,y=75+(i*33)%149;p(s,x,y,i%10===0?3:2,2,i%3?'#b7b2bf':'#82a6aa')}
+// Grand reflective silver mirror with watery blue light.
+p(s,645,113,177,167,'#514854');p(s,654,123,157,153,'#ad99aa');p(s,666,135,133,134,'#19242d');pg(s,'674,141 793,141 782,199 688,257','#485e6e');p(s,687,152,100,12,'#76909d');p(s,692,172,85,6,'#a4b2bb');p(s,703,246,66,5,'#a8bac0');p(s,724,272,11,26,'#6c6872');p(s,703,298,54,8,'#978797');
+let glimmer=g(s,'mirror-glimmer');for(let i=0;i<8;i++)p(glimmer,699+i*10,184+i*7,10,3,i%2?'#9fb9bc':'#758e9b');
+// Private table, codex, quill and enchanted correspondence.
+p(s,108,232,286,19,'#674c54');p(s,119,224,268,10,'#987783');p(s,131,251,22,60,'#40323f');p(s,352,251,22,60,'#40323f');
+p(s,157,186,193,37,'#644b48');p(s,166,177,175,12,'#927b69');pg(s,'165,177 243,155 337,178 257,197','#bfa58b');pg(s,'170,175 238,161 251,190 250,190','#edd8b1');pg(s,'256,190 261,166 333,177 258,195','#d8c5a8');
+p(s,250,167,5,27,'#68515c');for(let i=0;i<6;i++){p(s,185+i*9,177+i%2*2,5,2,'#a38c71');p(s,269+i*9,178+i%2*2,5,2,'#ad9785')}
+p(s,287,207,18,11,'#22242c');line(s,299,203,319,162,'#b8c3b8',3);p(s,316,161,11,5,'#e1cfbb');
+// Chest, family-memory alcove, gentle candles.
+p(s,427,246,106,39,'#51404b');p(s,437,238,87,12,'#9b7675');p(s,443,254,75,22,'#634c59');p(s,477,251,10,12,'#d1b89b');p(s,558,256,47,15,'#55515e');p(s,567,231,29,26,'#655a73');p(s,575,236,14,10,'#e8c9c7');candle(s,539,271,22);candle(s,613,271,27);
+stonePavement(s,292,'#26232d','#413a45');p(s,0,292,960,5,'#776779');
+}
+
+function renderScene(which){const stage=document.getElementById('stage');stage.replaceChildren();stage.className='stage'+(which===1?' ritual':'');document.body.setAttribute('data-room',String(which));if(which===1){const f=document.createElement('iframe');f.src='ritual-chamber-panorama-interactive-v10.html?embed=1';f.loading='lazy';f.title='Existing approved Ritual Chamber interactive panorama';stage.appendChild(f);return}
+const svg=el('svg',{viewBox:'0 0 960 320',preserveAspectRatio:'xMidYMid slice',role:'img','aria-label':R[which].name+' pixel-art panorama'});const builders=[crypt,null,library,obs,sanctum];builders[which](svg);stage.appendChild(svg);
+R[which].items.forEach(([name,id,type,x,y])=>{const a=document.createElement('a');a.className='relic';a.href=BASE+id;a.target='_blank';a.rel='noopener noreferrer';a.style.left=x+'%';a.style.top=y+'%';a.setAttribute('aria-label','Open '+name);a.textContent=icon[type]||'✦';const tip=document.createElement('span');tip.className='tip';tip.textContent=name;a.appendChild(tip);stage.appendChild(a)});}
+function choose(i){const room=R[i];document.getElementById('headline').textContent='✦ '+room.name;document.getElementById('blurb').textContent=room.desc;document.getElementById('count').textContent=room.items.length+' INDEXED RELICS';for(const btn of document.querySelectorAll('.tab'))btn.setAttribute('aria-selected',Number(btn.dataset.i)===i?'true':'false');const nav=document.getElementById('index');nav.replaceChildren();room.items.forEach(([name,id,type])=>{let li=document.createElement('li'),a=document.createElement('a');a.href=BASE+id;a.target='_blank';a.rel='noopener noreferrer';let small=document.createElement('i');small.textContent=icon[type]||'✦';a.appendChild(small);a.append(document.createTextNode(name));li.appendChild(a);nav.appendChild(li)});renderScene(i);document.getElementById('floor').textContent=room.n;}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{const n=Number(b.dataset.i);choose(n);try{history.replaceState(null,'','#floor-'+R[n].n.toLowerCase())}catch(e){}}));
+let chosen=R.findIndex(r=>location.hash.toLowerCase()==='#floor-'+r.n.toLowerCase());choose(chosen<0?1:chosen);
+</script></body></html>
