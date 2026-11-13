@@ -211,8 +211,7 @@ if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matc
  const prepare=()=>{
   canvas.width=W;canvas.height=H;ctx.drawImage(art,0,0,W,H);
   baseline=ctx.getImageData(0,0,W,H);
-  stage.classList.add('pixel-fire-active');
-  animate();
+  start();
  };
  const animate=()=>{
   if(!baseline||stage.classList.contains('no-motion'))return;
