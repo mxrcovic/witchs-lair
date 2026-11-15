@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#171319">
+<title>The Witch's Lair · Cursed Castle · Integrated V2 Mobile Motion Test</title>
+<meta name="description" content="One castle, five floors: integrated Ritual Chamber and Arcane Library, unified mobile motion toggle.">
+<style>
+:root{color-scheme:dark;--void:#111015;--stone:#29242b;--mortar:#54474c;--gold:#cfb48c;--ink:#e8dbca;--muted:#afa5a0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:transparent;color:var(--ink)}
+body{font-family:Georgia,"Times New Roman",serif}
+.castle{max-width:1160px;margin:0 auto;background:linear-gradient(90deg,#19171b 0,#29242b 1.2%,#1b171c 3.2%,#171419 50%,#201a20 97%,#332931 99%,#161219 100%);border:3px solid #53474e;outline:1px solid #241d24;box-shadow:inset 0 0 0 2px #261e27,0 12px 34px #08060b6b}
+.mast{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 18px 12px;background:radial-gradient(ellipse at 70% -30%,#66504245,transparent 75%),#1c181e;border-bottom:2px solid #766252}
+.crest{color:#ddc7ac;font-size:12px;font-weight:700;letter-spacing:2px}
+.crest span{color:#9f778b}
+.subtitle{color:#b4a39b;font:10px/1.6 ui-monospace,Consolas,monospace;letter-spacing:1.3px;margin-top:4px}
+.mast-mark{color:#ad9985;font:10px/1.4 ui-monospace,monospace;text-align:right;white-space:nowrap}
+.floor-map{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border-bottom:3px solid #55444c;background:#241f25}
+.floor-map a{display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;text-align:center;padding:10px 4px;color:#b3a69c;border-right:1px solid #4b4047;font:9px/1.2 ui-monospace,Consolas,monospace;letter-spacing:.35px;transition:background .15s,color .15s}
+.floor-map a:last-child{border-right:none}
+.floor-map .num{font:18px/1 Georgia,serif;color:#b99773}
+.floor-map .live .num{color:#e4c596}
+.floor-map a:hover,.floor-map a:focus-visible{background:#3f3238;color:#f9e9d3;outline-offset:-3px;outline:1px solid #b99b7c}
+.floor-map small{font-size:8px;color:#928984}
+.floor-map .live small{color:#c6ad92}
+.tower{position:relative}
+.floor{position:relative;border-bottom:7px solid #50434a;background:#17141a}
+.floor:not(:last-child):after{content:"";position:absolute;bottom:-7px;left:0;right:0;height:7px;pointer-events:none;background:repeating-linear-gradient(90deg,#6f5d5c 0 28px,#332a30 28px 31px,#5b4c4f 31px 68px,#292229 68px 71px);opacity:.62}
+.floor:last-child{border-bottom:0}
+.floor-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 15px;background:#211c22;border-bottom:1px solid #51444c}
+.floor-name{font-size:clamp(12px,2vw,16px);letter-spacing:.6px;color:#e5d5bd}
+.floor-name b{font-size:15px;color:var(--gold);font-weight:normal;margin-right:9px}
+.floor-state{font:9px/1.4 ui-monospace,Consolas,monospace;letter-spacing:.6px;color:#bda58b;white-space:nowrap}
+.floor.sealed .floor-state{color:#8c8284}
+.scene-shell{position:relative;background:#100f14;overflow:hidden}
+.scene-frame{width:100%;height:auto;aspect-ratio:2172/724;border:0;display:block;background:#111017}
+.floor.sealed .sealed-interior{min-height:72px;display:flex;align-items:center;justify-content:center;gap:13px;background:repeating-linear-gradient(0deg,#28232a 0 17px,#332d34 17px 18px),repeating-linear-gradient(90deg,transparent 0 56px,#393039 56px 58px);color:#9f9394;letter-spacing:1.5px;font:10px/1.5 ui-monospace,Consolas,monospace}
+.floor.sealed .sealed-interior:before,.floor.sealed .sealed-interior:after{content:"✧";font:17px Georgia;color:#806c6f}
+.foot{padding:12px 16px 16px;background:#1b171d;color:#958b8b;font:10px/1.6 ui-monospace,Consolas,monospace;border-top:1px solid #53434b}
+.foot strong{color:#cbb399;font-weight:normal}
+.status{display:none;color:#f0c6a6;margin-top:6px}
+.status:not(:empty){display:block}
+@media(max-width:760px){
+ .castle{border-width:2px}
+ .mast{padding:11px}
+ .crest{font-size:10px;letter-spacing:1px}
+ .subtitle{font-size:8px}
+ .mast-mark{font-size:8px}
+ .floor-map a{padding:8px 2px;font-size:8px}
+ .floor-map .num{font-size:16px}
+ .floor-map small{font-size:7px}
+ .floor-heading{padding:7px 9px}
+ .floor-name{font-size:12px}
+ .floor-state{font-size:8px}
+ .scene-frame{min-height:254px}
+ .floor.sealed .sealed-interior{min-height:62px;font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.floor-map a{transition:none}}
+
+.mast-side{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0}
+.castle-motion{appearance:none;min-height:40px;min-width:135px;padding:10px 13px;cursor:pointer;border:1px solid #b79577;background:#392c31;color:#f5dfbf;font:700 11px/1.2 ui-monospace,Consolas,monospace;letter-spacing:.6px;touch-action:manipulation}
+.castle-motion:hover,.castle-motion:focus-visible{background:#4a373b;outline:2px solid #d4b690;outline-offset:2px}
+.castle-motion[aria-pressed=false]{border-color:#74656b;background:#261e27;color:#bbb0a9}
+@media(max-width:760px){.mast{flex-wrap:wrap}.mast-side{width:100%;display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:8px}.mast-mark{text-align:left}.castle-motion{min-height:44px;min-width:155px;padding:12px}}
+</style>
+</head>
+<body>
+<main class="castle">
+<header class="mast">
+ <div><div class="crest">☾ THE WITCH'S LAIR <span>✣</span></div><div class="subtitle">✦ THE CURSED CASTLE // TOUCH THE RELICS</div></div>
+ <div class="mast-side"><div class="mast-mark">TEST LAB V2 · II + III<br>5 FLOORS / 1 CASTLE</div><button id="castle-motion" class="castle-motion" type="button" aria-pressed="true" aria-label="Toggle animations in both castle rooms">✦ MOTION: ON</button></div>
+</header>
+<nav class="floor-map" aria-label="Navigate the castle floors">
+ <a href="#grounds"><span class="num">I</span>GROUNDS<small>SEALED</small></a>
+ <a href="#ritual" class="live"><span class="num">II</span>RITUAL<small>ACTIVE</small></a>
+ <a href="#library" class="live"><span class="num">III</span>LIBRARY<small>ACTIVE</small></a>
+ <a href="#observatory"><span class="num">IV</span>STARS<small>SEALED</small></a>
+ <a href="#sanctum"><span class="num">V</span>SANCTUM<small>SEALED</small></a>
+</nav>
+<div class="tower">
+ <section class="floor sealed" id="grounds" aria-label="Floor I, Grounds, planned">
+  <div class="floor-heading"><div class="floor-name"><b>I</b> The Grounds</div><div class="floor-state">NOT YET BUILT</div></div>
+  <div class="sealed-interior">CHAMBER SEALED</div>
+ </section>
+ <section class="floor" id="ritual" aria-label="Floor II, Ritual Chamber, interactive">
+  <div class="floor-heading"><div class="floor-name"><b>II</b> The Ritual Chamber</div><div class="floor-state">6 RELICS · INTERACTIVE</div></div>
+  <div class="scene-shell"><iframe class="scene-frame" title="Interactive Ritual Chamber — click the relics to open Notion" src="./ritual-chamber-interactive-v26-castle-motion-test.html" loading="eager" data-kind="ritual"></iframe></div>
+ </section>
+ <section class="floor" id="library" aria-label="Floor III, Arcane Library, interactive">
+  <div class="floor-heading"><div class="floor-name"><b>III</b> The Arcane Library</div><div class="floor-state">9 RELICS · INTERACTIVE</div></div>
+  <div class="scene-shell"><iframe class="scene-frame" title="Interactive Arcane Library — click the relics to open Notion" src="./arcane-library-interactive-v17-castle-motion-test.html" loading="eager" data-kind="library"></iframe></div>
+ </section>
+ <section class="floor sealed" id="observatory" aria-label="Floor IV, Observatory, planned">
+  <div class="floor-heading"><div class="floor-name"><b>IV</b> The Observatory</div><div class="floor-state">NOT YET BUILT</div></div>
+  <div class="sealed-interior">CHAMBER SEALED</div>
+ </section>
+ <section class="floor sealed" id="sanctum" aria-label="Floor V, Sanctum, planned">
+  <div class="floor-heading"><div class="floor-name"><b>V</b> The Sanctum</div><div class="floor-state">NOT YET BUILT</div></div>
+  <div class="sealed-interior">CHAMBER SEALED</div>
+ </section>
+</div>
+<footer class="foot">
+ <strong>✦ INTEGRATION TEST</strong> · The approved Ritual V25 and Library V16 files remain untouched. One Notion embed, shared motion control and consistent relic tooltips. Notion links still open externally: in-app navigation is controlled by Notion, not the embed.
+ <div class="status" id="status" role="status"></div>
+</footer>
+</main>
+<script>
+"use strict";
+const motionButton=document.getElementById("castle-motion");
+const frames=[...document.querySelectorAll(".scene-frame")];
+const reduceMotion=Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)").matches);
+let motionEnabled=!reduceMotion;
+function renderMotion(){
+ motionButton.textContent=motionEnabled?"✦ MOTION: ON":"✦ MOTION: OFF";
+ motionButton.setAttribute("aria-pressed",String(motionEnabled));
+ motionButton.setAttribute("aria-label",motionEnabled?"Turn off castle animations":"Turn on castle animations");
+}
+function sendMotion(frame){
+ try{frame.contentWindow?.postMessage({type:"witchs-lair:motion",enabled:motionEnabled},"*");}
+ catch(error){document.getElementById("status").textContent="Motion control could not reach one room: "+error.message;}
+}
+frames.forEach(frame=>frame.addEventListener("load",()=>sendMotion(frame)));
+motionButton.addEventListener("click",()=>{
+ motionEnabled=!motionEnabled;renderMotion();
+ frames.forEach(sendMotion);
+});
+renderMotion();
+if(reduceMotion){
+ document.getElementById("status").textContent="Your device requests reduced motion. Use MOTION: OFF above to enable the original room animations explicitly.";
+}
+</script>
+</body>
+</html>
